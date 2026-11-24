@@ -115,6 +115,12 @@
       background-color: rgba(15, 23, 42, 0.52);
       backdrop-filter: blur(4px);
     }
+
+    @media print {
+      header, footer, nav, .no-print { display: none !important; }
+      body { padding-bottom: 0 !important; background: #FFFFFF !important; }
+      .card { box-shadow: none !important; border-color: #CBD5E1 !important; }
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col pb-20 md:pb-0">
@@ -843,6 +849,354 @@
   </section>
 
   <!-- =========================================================
+       VIEW 5: MENTOR STUDIO (BOOK CALL · LIVE ROOM · RECORD · REPORT)
+  ========================================================== -->
+  <section id="view-studio" class="hidden flex-1 bg-slate-50/70">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10 space-y-6">
+      <!-- Studio Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div class="space-y-1.5">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="studio-badge" class="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full pill-blue">Mentor Studio</span>
+            <span id="studio-room-pill" class="text-xs font-semibold text-slate-500">Private Portal Workflow</span>
+          </div>
+          <h2 id="studio-heading" class="heading-tight text-2xl sm:text-3xl font-extrabold text-[#111315]">Schedule, Run &amp; Record 1:1 Mentoring</h2>
+          <p id="studio-subtitle" class="text-xs sm:text-sm text-slate-600 max-w-2xl">
+            Confirm the graduate’s slot, host the 30-min call inside GradPath AU with built-in recording &amp; transcript, and send a branded written scorecard report.
+          </p>
+        </div>
+
+        <!-- 3-Step Studio Switcher (Hidden in Student Join Room Mode) -->
+        <div id="studio-tabs-bar" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar max-w-full p-1 rounded-full bg-slate-200/80 self-start md:self-auto">
+          <button data-stab="book" class="px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer">1. Schedule &amp; Invite</button>
+          <button data-stab="live" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">2. Live Call &amp; Record</button>
+          <button data-stab="report" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">3. Grad Report</button>
+        </div>
+      </div>
+
+      <!-- STEP 1: SCHEDULE & INVITE (PRE-FILLED FROM EMAIL LINK) -->
+      <div id="st-book" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 card rounded-3xl p-5 sm:p-6 space-y-5">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+            <h3 class="text-base font-extrabold text-[#111315]">Session Details</h3>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-green">Free Pilot · 30m</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-xs sm:text-sm">
+            <div>
+              <label class="text-xs font-bold block mb-1">Mentor</label>
+              <select id="st-mentor" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm cursor-pointer">
+                <option value="Abhishek Agarwal">Abhishek Agarwal (IAG · Agile &amp; AI)</option>
+                <option value="Rishi Aggarwal">Rishi Aggarwal (LevelBlue · Security)</option>
+                <option value="Brijesh Patel">Brijesh Patel (AWS DevOps &amp; Cloud)</option>
+                <option value="Paresh Bapna">Paresh Bapna (Medibank · Data Arch)</option>
+                <option value="Jacob George">Jacob George (Agile PM &amp; Delivery)</option>
+                <option value="Shifali Singla">Shifali Singla (IAG · Business Analysis)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs font-bold block mb-1">Graduate Name</label>
+              <input id="st-student" type="text" placeholder="e.g. Aarav Sharma" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="text-xs font-bold block mb-1">Graduate Email</label>
+              <input id="st-email" type="email" placeholder="student@uni.edu.au" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="text-xs font-bold block mb-1">University, Degree &amp; Visa</label>
+              <input id="st-degree" type="text" placeholder="e.g. UniMelb BDes (Computing) · Citizen" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="text-xs font-bold block mb-1">Session Topic</label>
+              <input id="st-topic" type="text" placeholder="e.g. CV, GitHub &amp; AU Grad Strategy Teardown (30m Free Pilot)" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="text-xs font-bold block mb-1">Graduate’s Preferred Window</label>
+              <input id="st-avail" type="text" placeholder="e.g. Weekday Evenings (6–8pm AEDT)" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm bg-slate-50" />
+            </div>
+            <div>
+              <label class="text-xs font-bold block mb-1">Student Goal / Links</label>
+              <input id="st-notes" type="text" placeholder="GitHub / LinkedIn / Target employers" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+          </div>
+
+          <!-- Pick Confirmed Date, Time & Video Room -->
+          <div class="pt-3 border-t border-slate-100 space-y-3.5">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Pick Confirmed Slot &amp; Video Room</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div>
+                <label class="text-xs font-bold block mb-1">Date</label>
+                <input id="st-date" type="date" class="field w-full rounded-xl px-3 py-2 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">Start Time (AEDT)</label>
+                <input id="st-time" type="time" value="18:30" class="field w-full rounded-xl px-3 py-2 text-xs sm:text-sm" />
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1">Duration</label>
+                <select id="st-duration" class="field w-full rounded-xl px-3 py-2 text-xs sm:text-sm cursor-pointer">
+                  <option value="30">30 minutes</option>
+                  <option value="45">45 minutes</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="text-xs font-bold block">Call Room Mode</label>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <label class="bg-blue-50/70 border border-blue-200 rounded-xl p-3 flex items-center gap-2.5 text-xs cursor-pointer">
+                  <input type="radio" name="st-room-mode" value="builtin" checked class="accent-blue-600" />
+                  <div>
+                    <div class="font-bold text-[#111315]">Built-in GradPath AU Video Room</div>
+                    <div class="text-slate-500">Free browser call · Zero downloads</div>
+                  </div>
+                </label>
+                <label class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5 text-xs cursor-pointer">
+                  <input type="radio" name="st-room-mode" value="custom" class="accent-blue-600" />
+                  <div>
+                    <div class="font-bold text-[#111315]">Custom Zoom / Google Meet Link</div>
+                    <div class="text-slate-500">Paste your own meeting URL</div>
+                  </div>
+                </label>
+              </div>
+              <div id="st-custom-url-wrap" class="hidden pt-1">
+                <input id="st-custom-url" type="url" placeholder="https://meet.google.com/xxx-xxxx-xxx or https://zoom.us/j/..." class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Card: Live Invite Preview & 1-Click Send Actions -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-extrabold text-[#111315]">Confirm &amp; Send Invite</h3>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-blue">1-Click Portal Sync</span>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-4 space-y-2 text-xs">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Student Join Link (Through GradPath AU)</div>
+              <div id="st-join-url-preview" class="font-mono text-[11px] text-blue-700 break-all bg-white border border-slate-200 rounded-xl p-2.5"></div>
+            </div>
+
+            <div class="space-y-2.5">
+              <button id="btn-st-gcal" class="btn-black w-full text-xs sm:text-sm font-semibold px-4 py-3 rounded-full cursor-pointer">
+                1. Add to Google Calendar (Invites Student) ↗
+              </button>
+              <button id="btn-st-mailto" class="btn-ghost w-full text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full cursor-pointer">
+                2. Email Confirmation &amp; Join Link to Student
+              </button>
+              <div class="grid grid-cols-2 gap-2">
+                <button id="btn-st-ics" class="btn-ghost text-xs font-semibold px-3 py-2.5 rounded-full cursor-pointer">Download .ics</button>
+                <button id="btn-st-copy" class="btn-ghost text-xs font-semibold px-3 py-2.5 rounded-full cursor-pointer">Copy Invite Text</button>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100">
+              <button id="btn-st-launch-live" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold px-4 py-3 rounded-full cursor-pointer transition-colors">
+                Launch Live Video Call &amp; Recorder →
+              </button>
+            </div>
+          </div>
+
+          <div class="card rounded-2xl p-4 text-xs text-slate-600 leading-relaxed space-y-1">
+            <div class="font-bold text-[#111315]">How the Graduate Joins</div>
+            <p>When the student clicks the <strong>GradPath AU Join Link</strong> in your invite, they open a clean, branded GradPath AU call room directly in their browser—no app install or account needed.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: LIVE VIDEO CALL + SESSION RECORDER + LIVE TRANSCRIPT -->
+      <div id="st-live" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left 7 Cols: Embedded GradPath AU Video Room -->
+        <div class="lg:col-span-7 card rounded-3xl p-4 sm:p-5 space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              <h3 id="st-live-title" class="text-sm sm:text-base font-extrabold text-[#111315]">GradPath AU Live Room</h3>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="btn-st-copy-room" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full cursor-pointer">Copy Student Link</button>
+              <a id="link-st-open-room" href="#" target="_blank" rel="noopener noreferrer" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full">Open Full Tab ↗</a>
+            </div>
+          </div>
+
+          <!-- Video Call Container (Loads on Click so Camera/Mic only start when ready) -->
+          <div id="st-room-stage" class="relative rounded-2xl overflow-hidden border border-slate-200 bg-[#111315] aspect-video flex flex-col items-center justify-center text-center p-6 text-white">
+            <div class="space-y-3 max-w-md">
+              <span class="inline-block text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-emerald-300">Private 1:1 Mentoring Room Ready</span>
+              <div id="st-room-banner-names" class="text-lg sm:text-xl font-extrabold">30-Min Mentoring Session</div>
+              <p class="text-xs text-slate-300">Click below to join the embedded browser call right inside GradPath AU (camera &amp; mic permission will be requested).</p>
+              <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <button id="btn-st-join-embed" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full cursor-pointer transition-colors">
+                  Start / Join Video Room
+                </button>
+                <a id="link-st-join-ext" href="#" target="_blank" rel="noopener noreferrer" class="bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-colors">
+                  Open in Separate Tab ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Agenda Strip (Visible to both Mentor & Student Join Mode) -->
+          <div class="bg-slate-50 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
+            <div><span class="font-extrabold text-blue-600">0–5m</span> <span class="text-slate-700">Target roles &amp; visa check</span></div>
+            <div><span class="font-extrabold text-blue-600">5–20m</span> <span class="text-slate-700">CV redline / STAR / Mock</span></div>
+            <div><span class="font-extrabold text-blue-600">20–30m</span> <span class="text-slate-700">Re-run &amp; 7-day plan</span></div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Mentor-Only Recording & Live Transcript Controls -->
+        <div id="st-mentor-tools" class="lg:col-span-5 space-y-4">
+          <!-- Session Recorder Card -->
+          <div class="card rounded-3xl p-5 space-y-4">
+            <div class="flex items-center justify-between gap-2">
+              <div>
+                <h4 class="text-sm font-extrabold text-[#111315]">Session Recorder</h4>
+                <p class="text-xs text-slate-500">Record call to review &amp; build the graduate’s report.</p>
+              </div>
+              <span id="st-rec-badge" class="hidden text-xs font-extrabold px-2.5 py-1 rounded-full bg-rose-600 text-white tabular-nums">● REC 00:00</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <button id="btn-st-rec-screen" class="btn-black text-xs font-semibold px-3.5 py-2.5 rounded-full cursor-pointer">● Record Screen + Audio</button>
+              <button id="btn-st-rec-audio" class="btn-ghost text-xs font-semibold px-3.5 py-2.5 rounded-full cursor-pointer">🎙 Record Mic Only</button>
+            </div>
+            <button id="btn-st-rec-stop" class="hidden w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2.5 rounded-full cursor-pointer">■ Stop Recording</button>
+
+            <div id="st-rec-output" class="hidden space-y-2.5 pt-2 border-t border-slate-100">
+              <video id="st-rec-player" controls playsinline class="w-full rounded-xl bg-black max-h-40"></video>
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-semibold text-emerald-700">✓ Session recorded locally</span>
+                <a id="link-st-rec-dl" download="gradpath-mentoring-session.webm" class="btn-black text-xs font-semibold px-3.5 py-1.5 rounded-full">Download .webm</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Transcript & Coaching Notes -->
+          <div class="card rounded-3xl p-5 space-y-3">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="text-sm font-extrabold text-[#111315]">Live Transcript &amp; Coaching Notes</h4>
+              <button id="btn-st-transcribe" class="chip text-xs font-bold px-3 py-1 rounded-full cursor-pointer">🎙 Start Transcript</button>
+            </div>
+            <textarea id="st-transcript" rows="6" placeholder="Click 'Start Transcript' in Chrome/Edge to capture spoken feedback live, or jot bullet notes here (e.g. CV lacks metrics, STAR conflict story too long, strong AWS capstone)..." class="field w-full rounded-2xl p-3 text-xs leading-relaxed"></textarea>
+            <button id="btn-st-autofill-report" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-full cursor-pointer transition-colors">
+              Auto-Draft Grad Report From Notes →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: GENERATE & SEND GRADUATE SCORECARD REPORT -->
+      <div id="st-report" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="lg:col-span-7 card rounded-3xl p-5 sm:p-6 space-y-5">
+          <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-100">
+            <div>
+              <h3 class="text-base font-extrabold text-[#111315]">Build Official Graduate Scorecard</h3>
+              <p class="text-xs text-slate-500">Adjust the 4 hiring-manager sliders and edit the student’s action plan.</p>
+            </div>
+            <div class="text-right">
+              <span id="rp-live-overall" class="text-2xl font-extrabold text-[#111315] tabular-nums">7.8</span>
+              <span class="text-xs font-bold text-slate-400">/10</span>
+            </div>
+          </div>
+
+          <!-- 4 Sliders -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="bg-slate-50 rounded-2xl p-3.5 space-y-1.5">
+              <div class="flex justify-between font-bold"><span>AU Resume &amp; ATS Fit</span><span id="rp-v1" class="tabular-nums text-blue-600">8.0</span></div>
+              <input id="rp-s1" type="range" min="3" max="10" step="0.5" value="8.0" class="w-full accent-blue-600 cursor-pointer" />
+            </div>
+            <div class="bg-slate-50 rounded-2xl p-3.5 space-y-1.5">
+              <div class="flex justify-between font-bold"><span>STAR Structure &amp; Clarity</span><span id="rp-v2" class="tabular-nums text-blue-600">7.5</span></div>
+              <input id="rp-s2" type="range" min="3" max="10" step="0.5" value="7.5" class="w-full accent-blue-600 cursor-pointer" />
+            </div>
+            <div class="bg-slate-50 rounded-2xl p-3.5 space-y-1.5">
+              <div class="flex justify-between font-bold"><span>Technical / Role Depth</span><span id="rp-v3" class="tabular-nums text-blue-600">8.0</span></div>
+              <input id="rp-s3" type="range" min="3" max="10" step="0.5" value="8.0" class="w-full accent-blue-600 cursor-pointer" />
+            </div>
+            <div class="bg-slate-50 rounded-2xl p-3.5 space-y-1.5">
+              <div class="flex justify-between font-bold"><span>Stakeholder &amp; Team Framing</span><span id="rp-v4" class="tabular-nums text-blue-600">7.5</span></div>
+              <input id="rp-s4" type="range" min="3" max="10" step="0.5" value="7.5" class="w-full accent-blue-600 cursor-pointer" />
+            </div>
+          </div>
+
+          <div class="space-y-3.5 text-xs">
+            <div>
+              <label class="font-bold block mb-1">Readiness Verdict</label>
+              <input id="rp-verdict" type="text" value="Ready for Stage 2 Video &amp; Tech Panel" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="font-bold block mb-1">Top 2 Red Flags Fixed (one per line)</label>
+              <textarea id="rp-fixes" rows="3" class="field w-full rounded-xl p-3 text-xs leading-relaxed">Replaced generic uni project descriptions with concrete ownership and measurable impact metrics.
+Tightened behavioural STAR answers to under 90 seconds with calm Australian workplace framing.</textarea>
+            </div>
+            <div>
+              <label class="font-bold block mb-1">Next 7-Day Action Plan (one per line)</label>
+              <textarea id="rp-plan" rows="3" class="field w-full rounded-xl p-3 text-xs leading-relaxed">Day 1–2: Update 1-page CV and pin top capstone repo with live architecture diagram.
+Day 3–4: Record 3 practice answers in GradPath AU Video Lab targeting top 2028 AU intakes.
+Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</textarea>
+            </div>
+            <div>
+              <label class="font-bold block mb-1">Personal Mentor Note (Optional)</label>
+              <textarea id="rp-note" rows="2" placeholder="Encouraging closing note or specific companies to target..." class="field w-full rounded-xl p-3 text-xs leading-relaxed"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 5 Cols: Shareable Report Link + Email + Print PDF -->
+        <div class="lg:col-span-5 space-y-4">
+          <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+            <div class="flex items-center justify-between">
+              <h3 class="text-base font-extrabold text-[#111315]">Publish &amp; Send Report</h3>
+              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-green">Branded PDF / Link</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Generate a permanent, branded <strong>GradPath AU Written Scorecard URL</strong> that your graduate can open on any phone or save as a PDF—no login needed.
+            </p>
+
+            <button id="btn-rp-generate" class="btn-black w-full text-xs sm:text-sm font-bold px-4 py-3 rounded-full cursor-pointer">
+              Generate Shareable Grad Report Link
+            </button>
+
+            <div id="rp-share-box" class="hidden space-y-3 pt-2 border-t border-slate-100">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-emerald-700">✓ Shareable Report Link Ready</div>
+              <div id="rp-url-text" class="font-mono text-[11px] text-blue-700 break-all bg-slate-50 border border-slate-200 rounded-xl p-2.5 max-h-24 overflow-y-auto"></div>
+              <div class="grid grid-cols-1 gap-2">
+                <button id="btn-rp-preview" class="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold px-4 py-2.5 rounded-full cursor-pointer">
+                  Open Branded Report / Save PDF →
+                </button>
+                <button id="btn-rp-email" class="btn-black text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full cursor-pointer">
+                  Email Report Link to Graduate
+                </button>
+                <button id="btn-rp-copy" class="btn-ghost text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">
+                  Copy Report Link
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       VIEW 6: BRANDED SHAREABLE GRADUATE SCORECARD REPORT (?report=...)
+  ========================================================== -->
+  <section id="view-report" class="hidden flex-1 bg-slate-50/70">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-3 no-print">
+        <button id="btn-report-back" class="btn-ghost text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">← Back to GradPath AU</button>
+        <div class="flex items-center gap-2">
+          <button id="btn-report-print" class="btn-black text-xs sm:text-sm font-semibold px-4 py-2 rounded-full cursor-pointer">Save as PDF / Print</button>
+        </div>
+      </div>
+
+      <article id="report-card-root" class="card rounded-3xl p-6 sm:p-8 space-y-6 bg-white"></article>
+    </div>
+  </section>
+
+  <!-- =========================================================
        CLEAN FOOTER
   ========================================================== -->
   <footer class="mt-auto border-t border-slate-200 bg-white">
@@ -855,6 +1209,7 @@
         <button data-jump-tab="mentors" class="hover:text-[#111315] cursor-pointer">Mentors</button>
         <button data-jump-tab="lab" class="hover:text-[#111315] cursor-pointer">Interview Lab</button>
         <button data-jump-tab="ac" class="hover:text-[#111315] cursor-pointer">Assessment Centres</button>
+        <button id="btn-open-studio-footer" class="text-blue-600 font-bold hover:underline cursor-pointer">Mentor Studio</button>
       </div>
     </div>
   </footer>
@@ -1164,14 +1519,16 @@
     // =========================================================================
     // NAVIGATION (Desktop Top Nav + Mobile Bottom Tab Bar)
     // =========================================================================
-    const views = ["programs", "mentors", "lab", "ac"];
+    const navTabs = ["programs", "mentors", "lab", "ac"];
+    const views = ["programs", "mentors", "lab", "ac", "studio", "report"];
     function switchTab(tab) {
       ["hero-video", "blueprint-video"].forEach(id => {
         const v = document.getElementById(id);
         if (v && !v.paused) v.pause();
       });
       views.forEach(v => {
-        document.getElementById("view-" + v).classList.toggle("hidden", v !== tab);
+        const el = document.getElementById("view-" + v);
+        if (el) el.classList.toggle("hidden", v !== tab);
         const dt = document.getElementById("tab-" + v);
         if (dt) dt.classList.toggle("active", v === tab);
       });
@@ -1181,7 +1538,7 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    views.forEach(v => document.getElementById("tab-" + v).addEventListener("click", () => switchTab(v)));
+    navTabs.forEach(v => document.getElementById("tab-" + v).addEventListener("click", () => switchTab(v)));
     document.querySelectorAll("[data-mtab]").forEach(btn => btn.addEventListener("click", () => switchTab(btn.dataset.mtab)));
     document.getElementById("brand-home").addEventListener("click", () => switchTab("programs"));
     document.querySelectorAll("[data-jump-tab]").forEach(el => el.addEventListener("click", () => switchTab(el.dataset.jumpTab)));
@@ -1508,9 +1865,24 @@
         const availability = fd.get("availability").toString();
         const topic = fd.get("topic").toString();
         const note = fd.get("note").toString().trim();
+        const portalBase = (window.location.origin && window.location.origin.startsWith("http"))
+          ? `${window.location.origin}${window.location.pathname}`
+          : "https://abhisheka12.github.io/gradpath-au/";
+        const sp = new URLSearchParams({
+          studio: "book",
+          mentor: m.name,
+          student: studentName,
+          email: studentEmail,
+          degree,
+          avail: availability,
+          topic,
+          notes: note.slice(0, 180)
+        });
+        const mentorPortalLink = `${portalBase}?${sp.toString()}`;
         const sent = await submitToFormspree({
           _subject: `[GradPath AU] 1:1 Free Pilot Request — ${m.name}`,
           _replyto: studentEmail,
+          mentor_portal_link: mentorPortalLink,
           form_type: "1:1 Mentor Match (Free Pilot)",
           requested_mentor: m.name,
           student_name: studentName,
@@ -2034,8 +2406,572 @@
       document.querySelectorAll("[data-cancel-bk]").forEach(btn => btn.addEventListener("click", () => { state.bookings = state.bookings.filter(b => b.id !== btn.dataset.cancelBk); saveState(); document.getElementById("btn-open-my-hub").click(); }));
     });
 
+    // =========================================================================
+    // VIEW 5 & 6: MENTOR STUDIO (SCHEDULE · LIVE ROOM · RECORDER · REPORT)
+    // =========================================================================
+    const escHtml = s => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    const getPortalBase = () => (window.location.origin && window.location.origin.startsWith("http"))
+      ? `${window.location.origin}${window.location.pathname}`
+      : "https://abhisheka12.github.io/gradpath-au/";
+
+    let studioRoomId = "GradPathAU-" + Math.random().toString(36).slice(2, 8).toUpperCase();
+    let studioRoomMode = "builtin";
+    let studioStudentJoinMode = false;
+
+    // Default date = tomorrow
+    (function initStudioDate() {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      const el = document.getElementById("st-date");
+      if (el && !el.value) el.value = iso;
+    })();
+
+    function getStudioData() {
+      return {
+        mentor: document.getElementById("st-mentor").value || "Abhishek Agarwal",
+        student: document.getElementById("st-student").value.trim() || "Graduate",
+        email: document.getElementById("st-email").value.trim(),
+        degree: document.getElementById("st-degree").value.trim(),
+        topic: document.getElementById("st-topic").value.trim() || "30-Min Free Pilot Mentoring Session",
+        avail: document.getElementById("st-avail").value.trim(),
+        notes: document.getElementById("st-notes").value.trim(),
+        date: document.getElementById("st-date").value,
+        time: document.getElementById("st-time").value || "18:30",
+        duration: parseInt(document.getElementById("st-duration").value || "30", 10),
+        customUrl: document.getElementById("st-custom-url").value.trim()
+      };
+    }
+
+    function getVideoCallUrl() {
+      const d = getStudioData();
+      if (studioRoomMode === "custom" && d.customUrl) return d.customUrl;
+      return `https://meet.jit.si/${encodeURIComponent(studioRoomId)}#config.prejoinPageEnabled=true&config.startWithAudioMuted=false`;
+    }
+
+    function getStudentPortalJoinUrl() {
+      const d = getStudioData();
+      if (studioRoomMode === "custom" && d.customUrl) return d.customUrl;
+      const qp = new URLSearchParams({
+        studio: "room",
+        room: studioRoomId,
+        mentor: d.mentor,
+        student: d.student,
+        topic: d.topic
+      });
+      return `${getPortalBase()}?${qp.toString()}`;
+    }
+
+    function refreshStudioLinks() {
+      const d = getStudioData();
+      const studentJoin = getStudentPortalJoinUrl();
+      const rawRoom = getVideoCallUrl();
+      document.getElementById("st-join-url-preview").textContent = studentJoin;
+      document.getElementById("st-live-title").textContent = `${d.mentor} × ${d.student}`;
+      document.getElementById("st-room-banner-names").textContent = `${d.topic}`;
+      document.getElementById("link-st-open-room").href = rawRoom;
+      document.getElementById("link-st-join-ext").href = rawRoom;
+    }
+
+    function switchStudioSubtab(sub) {
+      ["book", "live", "report"].forEach(k => {
+        document.getElementById(`st-${k}`).classList.toggle("hidden", k !== sub);
+      });
+      document.querySelectorAll("[data-stab]").forEach(b => {
+        const active = b.dataset.stab === sub;
+        b.className = active
+          ? "px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer"
+          : "px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer";
+      });
+      refreshStudioLinks();
+    }
+
+    document.querySelectorAll("[data-stab]").forEach(btn => btn.addEventListener("click", () => switchStudioSubtab(btn.dataset.stab)));
+    ["st-mentor", "st-student", "st-email", "st-degree", "st-topic", "st-date", "st-time", "st-duration", "st-custom-url"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", refreshStudioLinks);
+      if (el) el.addEventListener("change", refreshStudioLinks);
+    });
+    document.querySelectorAll('input[name="st-room-mode"]').forEach(r => {
+      r.addEventListener("change", () => {
+        studioRoomMode = r.value;
+        document.getElementById("st-custom-url-wrap").classList.toggle("hidden", studioRoomMode !== "custom");
+        refreshStudioLinks();
+      });
+    });
+
+    function buildInviteDetails() {
+      const d = getStudioData();
+      const joinUrl = getStudentPortalJoinUrl();
+      const whenStr = `${d.date || "TBD"} at ${d.time} Melbourne (AEDT) (${d.duration} min)`;
+      const subject = `Confirmed: GradPath AU 1:1 Mentoring — ${d.mentor} × ${d.student}`;
+      const body = [
+        `Hi ${d.student},`,
+        ``,
+        `Your free ${d.duration}-minute GradPath AU Pilot Mentoring session with ${d.mentor} is confirmed!`,
+        ``,
+        `• Topic: ${d.topic}`,
+        `• When: ${whenStr}`,
+        `• Join via GradPath AU Portal: ${joinUrl}`,
+        ``,
+        `What to bring:`,
+        `1. Your 1-page CV (PDF or Google Doc)`,
+        `2. Your LinkedIn / GitHub link (if relevant)`,
+        `3. Optional: 1 practice answer recorded in GradPath AU Video Lab`,
+        ``,
+        `Looking forward to speaking with you!`,
+        `— ${d.mentor}, GradPath AU`
+      ].join("\n");
+      return { d, joinUrl, whenStr, subject, body };
+    }
+
+    // 1. Google Calendar Invite (Pre-adds student email!)
+    document.getElementById("btn-st-gcal").addEventListener("click", () => {
+      const { d, joinUrl, subject, body } = buildInviteDetails();
+      const dtBase = (d.date || "2026-11-26").replace(/-/g, "");
+      const [hh, mm] = (d.time || "18:30").split(":").map(Number);
+      const startDt = new Date(2026, 0, 1, hh, mm);
+      const endDt = new Date(startDt.getTime() + d.duration * 60000);
+      const pad = n => String(n).padStart(2, "0");
+      const dates = `${dtBase}T${pad(startDt.getHours())}${pad(startDt.getMinutes())}00/${dtBase}T${pad(endDt.getHours())}${pad(endDt.getMinutes())}00`;
+      const gcal = new URL("https://calendar.google.com/calendar/render");
+      gcal.searchParams.set("action", "TEMPLATE");
+      gcal.searchParams.set("text", subject);
+      gcal.searchParams.set("dates", dates);
+      gcal.searchParams.set("ctz", "Australia/Melbourne");
+      gcal.searchParams.set("location", joinUrl);
+      gcal.searchParams.set("details", body);
+      if (d.email) gcal.searchParams.set("add", d.email);
+      window.open(gcal.toString(), "_blank", "noopener,noreferrer");
+      showToast("Opened Google Calendar invite!");
+    });
+
+    // 2. Email Confirmation to Student
+    document.getElementById("btn-st-mailto").addEventListener("click", () => {
+      const { d, subject, body } = buildInviteDetails();
+      const mailto = `mailto:${encodeURIComponent(d.email || "")}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+      showToast("Opening email draft for graduate...");
+    });
+
+    // 3. Download .ics file
+    document.getElementById("btn-st-ics").addEventListener("click", () => {
+      const { d, joinUrl, subject, body } = buildInviteDetails();
+      const dtBase = (d.date || "2026-11-26").replace(/-/g, "");
+      const [hh, mm] = (d.time || "18:30").split(":").map(Number);
+      const startDt = new Date(2026, 0, 1, hh, mm);
+      const endDt = new Date(startDt.getTime() + d.duration * 60000);
+      const pad = n => String(n).padStart(2, "0");
+      const dtStart = `${dtBase}T${pad(startDt.getHours())}${pad(startDt.getMinutes())}00`;
+      const dtEnd = `${dtBase}T${pad(endDt.getHours())}${pad(endDt.getMinutes())}00`;
+      const ics = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//GradPath AU//Mentor Studio//EN",
+        "BEGIN:VEVENT",
+        `UID:${studioRoomId}@gradpath-au`,
+        `DTSTART;TZID=Australia/Melbourne:${dtStart}`,
+        `DTEND;TZID=Australia/Melbourne:${dtEnd}`,
+        `SUMMARY:${subject}`,
+        `LOCATION:${joinUrl}`,
+        `DESCRIPTION:${body.replace(/\n/g, "\\n")}`,
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `gradpath-session-${studioRoomId}.ics`;
+      a.click();
+      showToast("Downloaded .ics calendar file!");
+    });
+
+    // 4. Copy Invite Text
+    document.getElementById("btn-st-copy").addEventListener("click", async () => {
+      const { body } = buildInviteDetails();
+      try { await navigator.clipboard.writeText(body); showToast("Copied invite message!"); }
+      catch { showToast("Copy failed — use Email or Google Calendar button."); }
+    });
+
+    document.getElementById("btn-st-launch-live").addEventListener("click", () => switchStudioSubtab("live"));
+    document.getElementById("btn-st-copy-room").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(getStudentPortalJoinUrl()); showToast("Copied GradPath AU student join link!"); }
+      catch { showToast("Could not access clipboard."); }
+    });
+
+    // Embedded Live Video Room Launcher (Jitsi Meet or Custom Link)
+    document.getElementById("btn-st-join-embed").addEventListener("click", () => {
+      const url = getVideoCallUrl();
+      if (studioRoomMode === "custom") {
+        window.open(url, "_blank", "noopener,noreferrer");
+        showToast("Opened custom Zoom/Meet link in new tab!");
+        return;
+      }
+      const stage = document.getElementById("st-room-stage");
+      stage.className = "relative rounded-2xl overflow-hidden border border-slate-200 bg-black aspect-video";
+      stage.innerHTML = `<iframe src="${url}" allow="camera; microphone; fullscreen; display-capture; autoplay; clipboard-write" class="w-full h-full border-0"></iframe>`;
+    });
+
+    // Session Recorder (Screen + Audio OR Mic Only via native MediaRecorder)
+    let stRecorder = null;
+    let stRecChunks = [];
+    let stRecStreams = [];
+    let stRecTimer = null;
+    let stRecSeconds = 0;
+
+    function stopStudioRecording() {
+      if (stRecorder && stRecorder.state !== "inactive") stRecorder.stop();
+      clearInterval(stRecTimer);
+      stRecStreams.forEach(s => s.getTracks().forEach(t => t.stop()));
+      stRecStreams = [];
+      document.getElementById("btn-st-rec-stop").classList.add("hidden");
+      document.getElementById("st-rec-badge").classList.add("hidden");
+    }
+
+    async function startStudioRecording(withScreen) {
+      if (!navigator.mediaDevices || typeof MediaRecorder === "undefined") {
+        showToast("Browser recording is not supported on this device.");
+        return;
+      }
+      try {
+        let combinedStream;
+        if (withScreen && navigator.mediaDevices.getDisplayMedia) {
+          const disp = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+          stRecStreams.push(disp);
+          let mic = null;
+          try { mic = await navigator.mediaDevices.getUserMedia({ audio: true }); stRecStreams.push(mic); } catch {}
+          const tracks = [...disp.getVideoTracks()];
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const dest = audioCtx.createMediaStreamDestination();
+          if (disp.getAudioTracks().length) audioCtx.createMediaStreamSource(new MediaStream(disp.getAudioTracks())).connect(dest);
+          if (mic && mic.getAudioTracks().length) audioCtx.createMediaStreamSource(mic).connect(dest);
+          dest.stream.getAudioTracks().forEach(t => tracks.push(t));
+          combinedStream = new MediaStream(tracks);
+          disp.getVideoTracks()[0].addEventListener("ended", stopStudioRecording);
+        } else {
+          const mic = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stRecStreams.push(mic);
+          combinedStream = mic;
+        }
+
+        stRecChunks = [];
+        stRecorder = new MediaRecorder(combinedStream);
+        stRecorder.ondataavailable = e => { if (e.data && e.data.size > 0) stRecChunks.push(e.data); };
+        stRecorder.onstop = () => {
+          const blob = new Blob(stRecChunks, { type: withScreen ? "video/webm" : "audio/webm" });
+          const blobUrl = URL.createObjectURL(blob);
+          const player = document.getElementById("st-rec-player");
+          player.src = blobUrl;
+          const dl = document.getElementById("link-st-rec-dl");
+          dl.href = blobUrl;
+          dl.download = `gradpath-session-${studioRoomId}.webm`;
+          document.getElementById("st-rec-output").classList.remove("hidden");
+          showToast("Recording saved — ready to play or download!");
+        };
+        stRecorder.start();
+        stRecSeconds = 0;
+        const badge = document.getElementById("st-rec-badge");
+        badge.textContent = "● REC 00:00";
+        badge.classList.remove("hidden");
+        document.getElementById("btn-st-rec-stop").classList.remove("hidden");
+        clearInterval(stRecTimer);
+        stRecTimer = setInterval(() => {
+          stRecSeconds++;
+          badge.textContent = `● REC ${String(Math.floor(stRecSeconds / 60)).padStart(2, "0")}:${String(stRecSeconds % 60).padStart(2, "0")}`;
+        }, 1000);
+        showToast(withScreen ? "Recording screen & audio!" : "Recording microphone audio!");
+      } catch {
+        showToast("Recording cancelled or permission denied.");
+      }
+    }
+
+    document.getElementById("btn-st-rec-screen").addEventListener("click", () => startStudioRecording(true));
+    document.getElementById("btn-st-rec-audio").addEventListener("click", () => startStudioRecording(false));
+    document.getElementById("btn-st-rec-stop").addEventListener("click", stopStudioRecording);
+
+    // Live Speech-to-Text Transcript (Chrome / Edge Web Speech API)
+    let stRecognition = null;
+    let stTranscribing = false;
+    document.getElementById("btn-st-transcribe").addEventListener("click", () => {
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const btn = document.getElementById("btn-st-transcribe");
+      if (!SR) { showToast("Live voice transcript requires Chrome or Edge—you can still type notes manually!"); return; }
+      if (stTranscribing && stRecognition) {
+        stTranscribing = false;
+        stRecognition.stop();
+        btn.textContent = "🎙 Start Transcript";
+        btn.classList.remove("active");
+        return;
+      }
+      stRecognition = new SR();
+      stRecognition.continuous = true;
+      stRecognition.interimResults = false;
+      stRecognition.lang = "en-AU";
+      stRecognition.onresult = (ev) => {
+        const box = document.getElementById("st-transcript");
+        let added = "";
+        for (let i = ev.resultIndex; i < ev.results.length; i++) {
+          if (ev.results[i].isFinal) added += ev.results[i][0].transcript.trim() + ". ";
+        }
+        if (added) box.value = (box.value ? box.value.trim() + "\n" : "") + added.trim();
+      };
+      stRecognition.onerror = () => { stTranscribing = false; btn.textContent = "🎙 Start Transcript"; btn.classList.remove("active"); };
+      stRecognition.onend = () => { if (stTranscribing) try { stRecognition.start(); } catch {} };
+      stRecognition.start();
+      stTranscribing = true;
+      btn.textContent = "■ Stop Transcript";
+      btn.classList.add("active");
+      showToast("Live AU English transcription started!");
+    });
+
+    // Auto-Draft Grad Report from Transcript / Notes
+    document.getElementById("btn-st-autofill-report").addEventListener("click", () => {
+      const raw = document.getElementById("st-transcript").value.trim();
+      const lower = raw.toLowerCase();
+      const fixes = [];
+      const plan = [];
+      if (lower.includes("cv") || lower.includes("resume") || lower.includes("metric") || lower.includes("bullet")) {
+        fixes.push("Rewrote generic university CV bullets to lead with individual ownership and concrete impact metrics.");
+        plan.push("Day 1–2: Finalise 1-page ATS-friendly Australian CV with quantified project outcomes.");
+      }
+      if (lower.includes("star") || lower.includes("video") || lower.includes("hirevue") || lower.includes("story") || lower.includes("conflict")) {
+        fixes.push("Trimmed behavioural STAR stories to crisp 75–90s responses with calm collaborative AU workplace tone.");
+        plan.push("Day 3–4: Record 3 timed STAR answers in the GradPath AU Video Lab and review eye-line & pacing.");
+      }
+      if (lower.includes("github") || lower.includes("aws") || lower.includes("cloud") || lower.includes("security") || lower.includes("data") || lower.includes("capstone")) {
+        fixes.push("Sharpened technical capstone explanation around architecture trade-offs, security, and CI/CD habits.");
+        plan.push("Day 2–4: Add architecture diagram & live README demo to your top pinned GitHub repository.");
+      }
+      if (lower.includes("ba") || lower.includes("jira") || lower.includes("stakeholder") || lower.includes("case") || lower.includes("group")) {
+        fixes.push("Framed stakeholder requirements & Assessment Centre group facilitation around structured prioritisation.");
+        plan.push("Day 3–5: Drill the MediLink 15-min Group Case rubric in GradPath AU Assessments.");
+      }
+      if (fixes.length) document.getElementById("rp-fixes").value = fixes.slice(0, 3).join("\n");
+      if (plan.length) document.getElementById("rp-plan").value = [...plan, "Day 5–7: Submit 6 tailored applications matching your visa eligibility ahead of 2028 AU intake openings."].slice(0, 3).join("\n");
+      if (raw && !document.getElementById("rp-note").value.trim()) {
+        document.getElementById("rp-note").value = "Key session notes captured: " + raw.slice(0, 220) + (raw.length > 220 ? "..." : "");
+      }
+      switchStudioSubtab("report");
+      showToast("Drafted Grad Scorecard Report from your session notes!");
+    });
+
+    // Scorecard Slider Sync
+    function updateReportSliders() {
+      const vals = [1, 2, 3, 4].map(i => {
+        const v = parseFloat(document.getElementById(`rp-s${i}`).value);
+        document.getElementById(`rp-v${i}`).textContent = v.toFixed(1);
+        return v;
+      });
+      const avg = (vals.reduce((a, b) => a + b, 0) / 4).toFixed(1);
+      document.getElementById("rp-live-overall").textContent = avg;
+    }
+    [1, 2, 3, 4].forEach(i => document.getElementById(`rp-s${i}`).addEventListener("input", updateReportSliders));
+    updateReportSliders();
+
+    function encodeReportPayload(obj) {
+      const json = JSON.stringify(obj);
+      const bytes = new TextEncoder().encode(json);
+      let bin = "";
+      bytes.forEach(b => bin += String.fromCharCode(b));
+      return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+    }
+    function decodeReportPayload(str) {
+      const b64 = str.replace(/-/g, "+").replace(/_/g, "/");
+      const bin = atob(b64);
+      const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+
+    let lastGeneratedReportUrl = "";
+    let lastReportObj = null;
+
+    function buildCurrentReportObj() {
+      const d = getStudioData();
+      const s = [1, 2, 3, 4].map(i => parseFloat(document.getElementById(`rp-s${i}`).value));
+      const overall = (s.reduce((a, b) => a + b, 0) / 4).toFixed(1);
+      return {
+        m: d.mentor,
+        st: d.student,
+        em: d.email,
+        dg: d.degree,
+        tp: d.topic,
+        dt: d.date || new Date().toISOString().slice(0, 10),
+        ov: overall,
+        sc: s,
+        vd: document.getElementById("rp-verdict").value.trim(),
+        fx: document.getElementById("rp-fixes").value.split("\n").map(x => x.trim()).filter(Boolean),
+        pl: document.getElementById("rp-plan").value.split("\n").map(x => x.trim()).filter(Boolean),
+        nt: document.getElementById("rp-note").value.trim()
+      };
+    }
+
+    function renderBrandedReport(r) {
+      const mentorObj = FOUNDING_MENTORS.find(x => x.name === r.m);
+      const labels = ["AU Resume & ATS Fit", "STAR Structure & Clarity", "Technical / Role Depth", "Stakeholder & Team Framing"];
+      const colors = ["bg-emerald-600", "bg-blue-600", "bg-blue-600", "bg-orange-500"];
+      const root = document.getElementById("report-card-root");
+      root.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            ${mentorObj && mentorObj.photo
+              ? `<img src="${mentorObj.photo}" alt="${escHtml(r.m)}" class="w-12 h-12 rounded-full object-cover ring-2 ring-slate-100 shrink-0" />`
+              : `<div class="w-12 h-12 rounded-2xl bg-[#111315] text-white font-extrabold text-sm flex items-center justify-center shrink-0">GP</div>`}
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-blue">Official GradPath AU Scorecard</span>
+                <span class="text-xs text-slate-400">${escHtml(r.dt)}</span>
+              </div>
+              <h2 class="heading-tight text-xl sm:text-2xl font-extrabold text-[#111315] mt-1">${escHtml(r.st)} — Mentoring Report</h2>
+              <div class="text-xs text-slate-500">Mentored by <strong class="text-[#111315]">${escHtml(r.m)}</strong>${r.dg ? ` · ${escHtml(r.dg)}` : ""}</div>
+            </div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center shrink-0">
+            <div class="text-[11px] font-bold uppercase text-slate-400">Readiness</div>
+            <div><span class="text-3xl font-extrabold text-[#111315] tabular-nums">${escHtml(r.ov)}</span><span class="text-xs font-bold text-slate-400">/10</span></div>
+          </div>
+        </div>
+
+        <div class="bg-emerald-50/70 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div><span class="font-bold text-emerald-900">Session Focus:</span> <span class="text-emerald-950">${escHtml(r.tp)}</span></div>
+          <span class="font-extrabold text-emerald-800">${escHtml(r.vd)}</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          ${(r.sc || [8, 7.5, 8, 7.5]).map((val, i) => `
+            <div class="bg-slate-50 rounded-2xl p-4 space-y-1.5">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-700">${labels[i]}</span>
+                <span class="font-extrabold text-[#111315] tabular-nums">${Number(val).toFixed(1)}/10</span>
+              </div>
+              <div class="h-2.5 rounded-full bg-slate-200/80 overflow-hidden">
+                <div class="h-full rounded-full ${colors[i]}" style="width: ${Math.min(100, Number(val) * 10)}%;"></div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="bg-rose-50/70 border border-rose-100 rounded-2xl p-4 space-y-2.5">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-rose-700">Key Red Flags Fixed</div>
+            <ul class="space-y-2 text-xs text-slate-700 leading-relaxed">
+              ${(r.fx || []).map(x => `<li class="flex items-start gap-2"><span class="text-rose-600 font-bold">•</span><span>${escHtml(x)}</span></li>`).join("")}
+            </ul>
+          </div>
+          <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 space-y-2.5">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Next 7-Day Action Plan</div>
+            <ul class="space-y-2 text-xs text-slate-700 leading-relaxed">
+              ${(r.pl || []).map(x => `<li class="flex items-start gap-2"><span class="text-emerald-700 font-bold">✓</span><span>${escHtml(x)}</span></li>`).join("")}
+            </ul>
+          </div>
+        </div>
+
+        ${r.nt ? `<div class="bg-slate-50 rounded-2xl p-4 space-y-1 text-xs"><div class="font-extrabold uppercase tracking-wider text-slate-400">Mentor Note</div><p class="text-slate-700 leading-relaxed">${escHtml(r.nt)}</p></div>` : ""}
+
+        <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-400">
+          <span>GradPath AU · Melbourne Founding Tech Mentors</span>
+          <button id="btn-report-followup" class="no-print btn-black text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Book Follow-Up Session →</button>
+        </div>
+      `;
+      document.getElementById("btn-report-followup").addEventListener("click", () => switchTab("mentors"));
+    }
+
+    document.getElementById("btn-rp-generate").addEventListener("click", () => {
+      lastReportObj = buildCurrentReportObj();
+      const encoded = encodeReportPayload(lastReportObj);
+      lastGeneratedReportUrl = `${getPortalBase()}?report=${encoded}`;
+      document.getElementById("rp-url-text").textContent = lastGeneratedReportUrl;
+      document.getElementById("rp-share-box").classList.remove("hidden");
+      showToast("Shareable GradPath AU Scorecard link generated!");
+    });
+
+    document.getElementById("btn-rp-preview").addEventListener("click", () => {
+      if (!lastReportObj) lastReportObj = buildCurrentReportObj();
+      renderBrandedReport(lastReportObj);
+      switchTab("report");
+    });
+
+    document.getElementById("btn-rp-copy").addEventListener("click", async () => {
+      if (!lastGeneratedReportUrl) return;
+      try { await navigator.clipboard.writeText(lastGeneratedReportUrl); showToast("Copied report link!"); }
+      catch { showToast("Could not copy link."); }
+    });
+
+    document.getElementById("btn-rp-email").addEventListener("click", () => {
+      if (!lastReportObj) lastReportObj = buildCurrentReportObj();
+      const subject = `Your GradPath AU Session Scorecard (${lastReportObj.ov}/10) — ${lastReportObj.m}`;
+      const body = [
+        `Hi ${lastReportObj.st},`,
+        ``,
+        `Great speaking with you today! Here is your official GradPath AU Written Scorecard & 7-Day Action Plan:`,
+        ``,
+        `• Overall Readiness: ${lastReportObj.ov}/10 — ${lastReportObj.vd}`,
+        `• View & Save PDF Report: ${lastGeneratedReportUrl}`,
+        ``,
+        `Keep pushing—you've got this!`,
+        `— ${lastReportObj.m}, GradPath AU`
+      ].join("\n");
+      window.location.href = `mailto:${encodeURIComponent(lastReportObj.em || "")}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+
+    document.getElementById("btn-report-print").addEventListener("click", () => window.print());
+    document.getElementById("btn-report-back").addEventListener("click", () => switchTab("programs"));
+    document.getElementById("btn-open-studio-footer").addEventListener("click", () => {
+      studioStudentJoinMode = false;
+      document.getElementById("studio-tabs-bar").classList.remove("hidden");
+      document.getElementById("st-mentor-tools").classList.remove("hidden");
+      switchTab("studio");
+      switchStudioSubtab("book");
+    });
+
+    // URL Deep-Link Router (?studio=book | ?studio=room | ?report=...)
+    function handleDeepLinks() {
+      const qp = new URLSearchParams(window.location.search);
+      const reportParam = qp.get("report");
+      if (reportParam) {
+        try {
+          const obj = decodeReportPayload(reportParam);
+          renderBrandedReport(obj);
+          switchTab("report");
+          return;
+        } catch {}
+      }
+      const studioParam = qp.get("studio");
+      if (studioParam) {
+        if (qp.get("mentor")) document.getElementById("st-mentor").value = qp.get("mentor");
+        if (qp.get("student")) document.getElementById("st-student").value = qp.get("student");
+        if (qp.get("email")) document.getElementById("st-email").value = qp.get("email");
+        if (qp.get("degree")) document.getElementById("st-degree").value = qp.get("degree");
+        if (qp.get("avail")) document.getElementById("st-avail").value = qp.get("avail");
+        if (qp.get("topic")) document.getElementById("st-topic").value = qp.get("topic");
+        if (qp.get("notes")) document.getElementById("st-notes").value = qp.get("notes");
+        if (qp.get("room")) studioRoomId = qp.get("room");
+
+        if (studioParam === "room") {
+          // Clean Student Join Room Mode (hides mentor scheduling & scorecard controls)
+          studioStudentJoinMode = true;
+          const stName = qp.get("student") || "Graduate";
+          const mName = qp.get("mentor") || "Your GradPath AU Mentor";
+          document.getElementById("studio-badge").textContent = "Live 1:1 Mentoring Room";
+          document.getElementById("studio-room-pill").textContent = "Free Founding Pilot · 30 Min";
+          document.getElementById("studio-heading").textContent = `Welcome ${stName} — Session with ${mName}`;
+          document.getElementById("studio-subtitle").textContent = "Click 'Start / Join Video Room' below to connect directly in your browser. Bring your 1-page CV!";
+          document.getElementById("studio-tabs-bar").classList.add("hidden");
+          document.getElementById("st-mentor-tools").classList.add("hidden");
+          switchTab("studio");
+          switchStudioSubtab("live");
+        } else {
+          // Mentor clicked email deep-link -> Schedule & Invite pre-filled!
+          studioStudentJoinMode = false;
+          document.getElementById("studio-tabs-bar").classList.remove("hidden");
+          document.getElementById("st-mentor-tools").classList.remove("hidden");
+          switchTab("studio");
+          switchStudioSubtab(studioParam === "live" ? "live" : studioParam === "report" ? "report" : "book");
+        }
+      }
+    }
+
     // INIT
-    updateBadges(); renderPrograms(); renderMentors(); renderVideoPrompt(); renderStarBank(); renderAcCohorts(); renderAcRubric();
+    updateBadges(); renderPrograms(); renderMentors(); renderVideoPrompt(); renderStarBank(); renderAcCohorts(); renderAcRubric(); refreshStudioLinks(); handleDeepLinks();
   </script>
 </body>
 </html>
