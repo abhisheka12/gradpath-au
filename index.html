@@ -1740,6 +1740,20 @@
       updateBadges();
     }
 
+    const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjywpzpq";
+    async function submitToFormspree(payload) {
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        return res.ok;
+      } catch {
+        return false;
+      }
+    }
+
     function showToast(msg) {
       const t = document.getElementById("toast");
       t.textContent = msg;
@@ -2021,11 +2035,19 @@
         </form>
       `);
 
-      document.getElementById("form-add-prog").addEventListener("submit", (e) => {
+      document.getElementById("form-add-prog").addEventListener("submit", async (e) => {
         e.preventDefault();
+        const btn = e.target.querySelector("button[type='submit']");
+        btn.disabled = true;
+        btn.textContent = "Sending...";
         const fd = new FormData(e.target);
         const company = fd.get("company").toString().trim();
+        const role = fd.get("role").toString().trim();
+        const city = fd.get("city").toString().trim();
+        const salary = fd.get("salary").toString().trim();
         const visa = fd.get("visa").toString();
+        const url = fd.get("url").toString().trim();
+        const tip = fd.get("tip").toString().trim();
         const visaMap = { "485": "485 Visa OK", "pr": "Citizen / PR", "citizen": "AU Citizen Only" };
         const newProg = {
           id: "custom-" + Date.now(),
@@ -2033,24 +2055,36 @@
           code: company.slice(0, 2).toUpperCase(),
           brandBg: "#0E5A4C",
           brandFg: "#FFFFFF",
-          role: fd.get("role").toString().trim(),
+          role,
           category: fd.get("category").toString(),
-          cities: [fd.get("city").toString().trim()],
-          salary: fd.get("salary").toString().trim(),
+          cities: [city],
+          salary,
           visa,
           visaLabel: visaMap[visa],
           intake: "open",
-          deadline: "Community Added · Open Now",
-          url: fd.get("url").toString().trim(),
+          deadline: "Community Submitted",
+          verified: "Pending Review",
+          url,
           wamNote: "Submitted via GradPath AU community intel.",
-          stages: [{ name: "Reported Process", tip: fd.get("tip").toString().trim() }]
+          stages: [{ name: "Reported Process", tip }]
         };
+        const sent = await submitToFormspree({
+          _subject: `[GradPath AU] New Program Submission — ${company}`,
+          form_type: "Program Intel Submission",
+          company,
+          role,
+          city,
+          salary,
+          visa: visaMap[visa],
+          official_url: url,
+          hiring_tip: tip
+        });
         state.customPrograms.unshift(newProg);
         state.statuses[newProg.id] = "Saved";
         saveState();
         renderPrograms();
         closeModal();
-        showToast(`Added ${company} to the AU Graduate Directory!`);
+        showToast(sent ? `Submitted ${company} to our team & added to your list!` : `Added ${company} locally to your directory!`);
       });
     });
 
@@ -2139,9 +2173,14 @@
               <input required name="studentName" placeholder="e.g. Aarav" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
             </div>
             <div>
-              <label class="text-xs font-bold block mb-1 text-[#161A1D]">University &amp; Degree</label>
-              <input required name="degree" placeholder="e.g. UniMelb BDes (Computing)" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+              <label class="text-xs font-bold block mb-1 text-[#161A1D]">Your Email</label>
+              <input required type="email" name="studentEmail" placeholder="you@email.com" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
             </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold block mb-1 text-[#161A1D]">University, Degree &amp; Visa Status</label>
+            <input required name="degree" placeholder="e.g. UniMelb BDes (Computing) · Citizen / PR / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
           </div>
 
           <div class="space-y-2">
@@ -2155,47 +2194,76 @@
           </div>
 
           <div>
-            <label class="text-xs font-bold block mb-1 text-[#161A1D]">Your Goal / Questions</label>
+            <label class="text-xs font-bold block mb-1 text-[#161A1D]">Your Goal / LinkedIn or GitHub Link</label>
             <textarea name="note" rows="2" placeholder="Share your target roles, timeline, or LinkedIn/GitHub link..." class="field w-full rounded-xl p-3 text-xs sm:text-sm"></textarea>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[#EFEAE2]">
-            <span class="text-xs text-[#606A74]">Founding Beta · We coordinate a 30–45 min intro directly</span>
+            <span class="text-xs text-[#606A74]">Sent directly to the GradPath AU team to coordinate your intro</span>
             <button type="submit" class="btn-eucalyptus text-xs font-semibold px-5 py-2.5 rounded-xl cursor-pointer">Submit Match Request</button>
           </div>
         </form>
       `);
 
-      document.getElementById("form-book-mentor").addEventListener("submit", (e) => {
+      document.getElementById("form-book-mentor").addEventListener("submit", async (e) => {
         e.preventDefault();
+        const btn = e.target.querySelector("button[type='submit']");
+        btn.disabled = true;
+        btn.textContent = "Sending...";
         const fd = new FormData(e.target);
+        const studentName = fd.get("studentName").toString().trim();
+        const studentEmail = fd.get("studentEmail").toString().trim();
+        const degree = fd.get("degree").toString().trim();
         const topic = fd.get("topic").toString();
+        const note = fd.get("note").toString().trim();
+
+        const sent = await submitToFormspree({
+          _subject: `[GradPath AU] 1:1 Mentor Match Request — ${m.name}`,
+          _replyto: studentEmail,
+          form_type: "1:1 Mentor Match Request",
+          requested_mentor: m.name,
+          mentor_role: m.role,
+          student_name: studentName,
+          email: studentEmail,
+          university_degree: degree,
+          topic,
+          notes: note
+        });
+
         state.bookings.unshift({
           id: "bk-" + Date.now(),
           mentorName: m.name,
           mentorRole: m.role,
           service: topic,
-          slot: "Match Requested (" + fd.get("degree").toString().trim() + ")"
+          slot: "Sent (" + degree + ")"
         });
         saveState();
         closeModal();
-        showToast(`Match request saved for ${m.name}!`);
+        showToast(sent ? `Match request emailed for ${m.name} — we’ll be in touch!` : `Match request saved locally for ${m.name}!`);
       });
     }
 
     // Add / Onboard Real Founding Mentor Modal
     document.getElementById("btn-add-mentor").addEventListener("click", () => {
-      openModal("Add a Founding Mentor Profile", `
+      openModal("Join as a Founding Mentor", `
         <form id="form-add-mentor" class="space-y-4 text-xs sm:text-sm">
-          <p class="text-xs text-[#5A646E]">Add a real Australian industry practitioner (Cybersecurity, DevOps, Architect, Salesforce, PM) or recent graduate-program alum to the Founding Network.</p>
+          <p class="text-xs text-[#5A646E]">Are you an Australian industry practitioner or recent grad-program alum? Submit your profile to join the GradPath AU Founding Mentor Network.</p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             <div>
-              <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Mentor Name</label>
-              <input required name="name" placeholder="e.g. Rajesh K." class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
+              <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Full Name</label>
+              <input required name="name" placeholder="e.g. Priya Sharma" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Contact Email</label>
+              <input required type="email" name="email" placeholder="you@email.com" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
             </div>
             <div>
               <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Role &amp; City</label>
-              <input required name="role" placeholder="e.g. Principal Cloud Architect · Melbourne" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
+              <input required name="role" placeholder="e.g. Senior Salesforce Developer · Melbourne" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
+            </div>
+            <div>
+              <label class="text-xs font-semibold block mb-1 text-[#161A1D]">LinkedIn Profile URL</label>
+              <input type="url" name="linkedin" placeholder="https://www.linkedin.com/in/..." class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
             </div>
             <div>
               <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Mentor Track</label>
@@ -2221,45 +2289,70 @@
             <input required name="experience" placeholder="e.g. 12+ yrs AU Banking & Enterprise · Hiring Panelist" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
           </div>
           <div>
-            <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Short Bio (How they help graduates)</label>
-            <textarea required name="bio" rows="2" placeholder="What graduates can ask them about (mock interviews, CV teardowns, career pathways)..." class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm"></textarea>
+            <label class="text-xs font-semibold block mb-1 text-[#161A1D]">Short Bio (How you help graduates)</label>
+            <textarea required name="bio" rows="2" placeholder="What graduates can ask you about (mock interviews, CV teardowns, career pathways)..." class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm"></textarea>
           </div>
           <div>
             <label class="text-xs font-semibold block mb-1 text-[#161A1D]">2 Key Session Topics (comma-separated)</label>
-            <input required name="topics" placeholder="e.g. Architecture Portfolio Review, Technical Panel Mock" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
+            <input required name="topics" placeholder="e.g. Salesforce Portfolio Review, Technical Panel Mock" class="field w-full px-3.5 py-2 rounded-xl text-xs sm:text-sm" />
           </div>
           <div class="flex justify-end pt-2">
-            <button type="submit" class="btn-eucalyptus text-xs font-semibold px-5 py-2.5 rounded-xl cursor-pointer">Publish Mentor Card</button>
+            <button type="submit" class="btn-eucalyptus text-xs font-semibold px-5 py-2.5 rounded-xl cursor-pointer">Submit Mentor Application</button>
           </div>
         </form>
       `);
 
-      document.getElementById("form-add-mentor").addEventListener("submit", (e) => {
+      document.getElementById("form-add-mentor").addEventListener("submit", async (e) => {
         e.preventDefault();
+        const btn = e.target.querySelector("button[type='submit']");
+        btn.disabled = true;
+        btn.textContent = "Submitting...";
         const fd = new FormData(e.target);
         const name = fd.get("name").toString().trim();
+        const email = fd.get("email").toString().trim();
+        const role = fd.get("role").toString().trim();
+        const linkedin = fd.get("linkedin").toString().trim();
         const tier = fd.get("tier").toString();
         const spec = fd.get("specialty").toString();
+        const experience = fd.get("experience").toString().trim();
+        const bio = fd.get("bio").toString().trim();
         const parts = name.split(/\s+/);
         const initials = (parts[0][0] + (parts[1] ? parts[1][0] : (parts[0][1] || ""))).toUpperCase();
         const topics = fd.get("topics").toString().split(",").map(s => s.trim()).filter(Boolean);
+
+        const sent = await submitToFormspree({
+          _subject: `[GradPath AU] New Mentor Application — ${name} (${spec})`,
+          _replyto: email,
+          form_type: "Founding Mentor Application",
+          mentor_name: name,
+          email,
+          role,
+          linkedin,
+          tier,
+          specialty: spec,
+          experience,
+          bio,
+          topics: topics.join(" | ")
+        });
+
         state.customMentors.unshift({
           id: "cm-" + Date.now(),
           tier,
           name,
           initials,
           avatarBg: tier === "Senior Industry" ? "#0E5A4C" : "#B54322",
-          role: fd.get("role").toString().trim(),
-          experience: fd.get("experience").toString().trim(),
-          status: "Verified Founding Mentor",
+          role,
+          experience,
+          status: "Pending Verification",
+          linkedin: linkedin || undefined,
           tags: [tier, spec],
-          bio: fd.get("bio").toString().trim(),
+          bio,
           topics: topics.length ? topics : ["1:1 Career & Interview Guidance"]
         });
         saveState();
         renderMentors();
         closeModal();
-        showToast(`Added ${name} to the Founding Mentor Network!`);
+        showToast(sent ? `Thanks ${name}! Your mentor profile was sent to our team.` : `Added ${name} locally!`);
       });
     });
 
@@ -2638,13 +2731,65 @@
           const cohort = AC_COHORTS.find(x => x.id === id);
           if (state.acReservations.some(r => r.id === id)) {
             state.acReservations = state.acReservations.filter(r => r.id !== id);
+            saveState();
+            renderAcCohorts();
             showToast(`Removed from waitlist for ${cohort.title}`);
-          } else {
-            state.acReservations.push(cohort);
-            showToast(`Joined pilot waitlist for "${cohort.title}"!`);
+            return;
           }
-          saveState();
-          renderAcCohorts();
+          openModal(`Join Pilot Waitlist — ${cohort.title}`, `
+            <form id="form-ac-waitlist" class="space-y-4 text-xs sm:text-sm">
+              <div class="card-soft rounded-xl p-4 space-y-1">
+                <div class="font-bold text-[#14191F]">${cohort.title}</div>
+                <div class="text-xs text-[#0E5A4C] font-semibold">${cohort.date}</div>
+                <div class="text-xs text-[#525B65]">${cohort.format}</div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="text-xs font-bold block mb-1 text-[#161A1D]">Your Name</label>
+                  <input required name="name" placeholder="e.g. Aarav" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+                </div>
+                <div>
+                  <label class="text-xs font-bold block mb-1 text-[#161A1D]">Your Email</label>
+                  <input required type="email" name="email" placeholder="you@email.com" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+                </div>
+              </div>
+              <div>
+                <label class="text-xs font-bold block mb-1 text-[#161A1D]">University, Degree &amp; City</label>
+                <input required name="degree" placeholder="e.g. UniMelb BDes (Computing) · Melbourne" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#EFEAE2]">
+                <span class="text-xs text-[#606A74]">We’ll email you first when pilot seats open</span>
+                <button type="submit" class="btn-eucalyptus text-xs font-semibold px-5 py-2.5 rounded-xl cursor-pointer">Join Waitlist</button>
+              </div>
+            </form>
+          `);
+
+          document.getElementById("form-ac-waitlist").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector("button[type='submit']");
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Joining...";
+            const fd = new FormData(e.target);
+            const name = fd.get("name").toString().trim();
+            const email = fd.get("email").toString().trim();
+            const degree = fd.get("degree").toString().trim();
+
+            const sent = await submitToFormspree({
+              _subject: `[GradPath AU] Pilot AC Waitlist — ${cohort.title}`,
+              _replyto: email,
+              form_type: "Pilot Assessment Centre Waitlist",
+              cohort: cohort.title,
+              student_name: name,
+              email,
+              university_degree: degree
+            });
+
+            state.acReservations.push(cohort);
+            saveState();
+            renderAcCohorts();
+            closeModal();
+            showToast(sent ? `You’re on the waitlist for "${cohort.title}"!` : `Saved waitlist locally for "${cohort.title}"!`);
+          });
         });
       });
     }
