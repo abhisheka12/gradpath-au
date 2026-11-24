@@ -2107,6 +2107,7 @@
 
       grid.innerHTML = list.map(m => {
         const isSenior = m.tier === "Senior Industry";
+        const isFounder = m.status && m.status.includes("Founder");
         return `
           <article class="card-elevated rounded-2xl overflow-hidden flex flex-col justify-between">
             <div>
@@ -2117,8 +2118,11 @@
                     <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${isSenior ? "pill-eucalyptus" : "pill-ochre"}">${m.tier}</span>
                     ${m.linkedin ? `<a href="${m.linkedin}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-[#0E5A4C] hover:underline shrink-0">LinkedIn ↗</a>` : ""}
                   </div>
-                  <h3 class="text-sm sm:text-base font-bold text-[#14191F] mt-1.5 leading-snug">${m.name}</h3>
-                  <div class="text-xs font-medium text-[#0E5A4C] truncate">${m.role}</div>
+                  <div class="flex items-center gap-1.5 flex-wrap mt-1.5">
+                    <h3 class="text-sm sm:text-base font-bold text-[#14191F] leading-snug">${m.name}</h3>
+                    ${isFounder ? `<span class="text-xs font-semibold px-2 py-0.5 rounded-full pill-ochre">Founder</span>` : ""}
+                  </div>
+                  <div class="text-xs font-medium text-[#0E5A4C] leading-snug mt-0.5">${m.role}</div>
                   <div class="text-xs text-[#68727C] mt-0.5">${m.experience}</div>
                 </div>
               </div>
