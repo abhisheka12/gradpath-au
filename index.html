@@ -293,16 +293,44 @@
   <section id="view-mentors" class="hidden flex-1 bg-slate-50/70">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-6">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div class="space-y-1.5">
-          <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Founding Mentors &amp; Ex-Grads</span>
+        <div class="space-y-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Founding Mentors &amp; Ex-Grads</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-green">Free Founding Pilot · $0 (30 Min)</span>
+          </div>
           <h2 class="heading-tight text-2xl sm:text-4xl font-extrabold text-[#111315]">1:1 Guidance From Real AU Tech Leaders</h2>
           <p class="text-xs sm:text-sm text-slate-600 max-w-xl">
-            Request a direct match with our Melbourne founders across Cybersecurity, AWS DevOps, Data Architecture &amp; Agile Delivery—or our onboarding ex-grad tracks.
+            Book a free 30-minute pilot session with our 6 Melbourne founders across Cybersecurity, AWS DevOps, Data Architecture, Business Analysis &amp; Agile Delivery.
           </p>
         </div>
         <button id="btn-add-mentor" class="btn-black text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-full self-start md:self-auto cursor-pointer shrink-0">
           + Join as Mentor
         </button>
+      </div>
+
+      <!-- Compact 3-Step "How 1:1 Mentoring Works" Strip -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="card rounded-2xl p-4 flex items-start gap-3">
+          <span class="w-7 h-7 rounded-full bg-[#111315] text-white text-xs font-extrabold flex items-center justify-center shrink-0">1</span>
+          <div class="space-y-0.5">
+            <div class="text-xs sm:text-sm font-bold text-[#111315]">Pick a Founder &amp; Goal</div>
+            <p class="text-xs text-slate-500 leading-relaxed">Share your degree, visa status &amp; CV or GitHub link in 60 seconds.</p>
+          </div>
+        </div>
+        <div class="card rounded-2xl p-4 flex items-start gap-3">
+          <span class="w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">2</span>
+          <div class="space-y-0.5">
+            <div class="text-xs sm:text-sm font-bold text-[#111315]">30-Min Live Zoom / Meet</div>
+            <p class="text-xs text-slate-500 leading-relaxed">Structured agenda—CV redlines, mock Q&amp;A or STAR coaching. Zero awkwardness.</p>
+          </div>
+        </div>
+        <div class="card rounded-2xl p-4 flex items-start gap-3">
+          <span class="w-7 h-7 rounded-full bg-emerald-600 text-white text-xs font-extrabold flex items-center justify-center shrink-0">3</span>
+          <div class="space-y-0.5">
+            <div class="text-xs sm:text-sm font-bold text-[#111315]">Written Scorecard &amp; Plan</div>
+            <p class="text-xs text-slate-500 leading-relaxed">Walk away with a scored feedback sheet &amp; 7-day application checklist.</p>
+          </div>
+        </div>
       </div>
 
       <div id="mentor-specialty-chips" class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
@@ -318,6 +346,245 @@
       </div>
 
       <div id="mentors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+      <!-- =========================================================
+           INSIDE A MENTORING SESSION (CLEAN TABBED EXAMPLES)
+      ========================================================== -->
+      <div class="pt-6 sm:pt-10 border-t border-slate-200/80 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div class="space-y-1.5">
+            <span class="text-xs font-bold uppercase tracking-wider text-blue-600">What Actually Happens On The Call</span>
+            <h3 class="heading-tight text-xl sm:text-3xl font-extrabold text-[#111315]">See How Mentoring Works</h3>
+            <p class="text-xs sm:text-sm text-slate-600 max-w-xl">
+              Nervous about booking your first call? Preview our exact 30-minute agendas, sample written scorecard, real AU resume/STAR makeovers &amp; FAQs.
+            </p>
+          </div>
+          <!-- Segmented Pill Switcher -->
+          <div id="mentor-example-tabs" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1 rounded-full bg-slate-200/75 self-start md:self-auto">
+            <button data-mtab="blueprints" class="px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer">Session Blueprints</button>
+            <button data-mtab="scorecard" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Sample Scorecard</button>
+            <button data-mtab="makeover" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Before vs. After</button>
+            <button data-mtab="faq" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Grad FAQ</button>
+          </div>
+        </div>
+
+        <!-- TAB 1: 4 Concrete Session Blueprints -->
+        <div id="mtab-blueprints" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Blueprint 1 -->
+          <div class="card rounded-3xl p-5 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-blue">30 Min · Free Pilot</span>
+                <span class="text-xs font-semibold text-slate-400">Abhishek / Brijesh</span>
+              </div>
+              <div>
+                <h4 class="text-base font-extrabold text-[#111315]">CV, GitHub &amp; AU Grad Strategy Teardown</h4>
+                <p class="text-xs text-slate-500 mt-1">Best if you aren't getting past Stage 1 ATS screening or don't know which 2028 programs fit your visa &amp; degree.</p>
+              </div>
+              <div class="space-y-2 pt-1 text-xs">
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">0–5m</span><span class="text-slate-700">Target roles, visa eligibility check &amp; 2027/28 timeline</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">5–20m</span><span class="text-slate-700">Live line-by-line edit of your 1-page CV, LinkedIn &amp; pinned GitHub README</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">20–30m</span><span class="text-slate-700">Shortlist of 8 best-fit AU employers + written redline checklist</span></div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-emerald-700">Takeaway: Redlined CV + Employer Shortlist</span>
+              <button data-book-blueprint="fm-abhishek-agarwal" data-bp-topic="CV, GitHub &amp; AU Grad Strategy Teardown (30m Free Pilot)" class="btn-black text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0 cursor-pointer">Book Format</button>
+            </div>
+          </div>
+
+          <!-- Blueprint 2 -->
+          <div class="card rounded-3xl p-5 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-orange">30 Min · Free Pilot</span>
+                <span class="text-xs font-semibold text-slate-400">Jacob / Shifali</span>
+              </div>
+              <div>
+                <h4 class="text-base font-extrabold text-[#111315]">One-Way Video &amp; STAR Story Coaching</h4>
+                <p class="text-xs text-slate-500 mt-1">Best if you freeze on HireVue/Vieple cameras or ramble during behavioural questions without clear impact.</p>
+              </div>
+              <div class="space-y-2 pt-1 text-xs">
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">0–5m</span><span class="text-slate-700">Review 1–2 answers recorded in our Practice Lab (or live dry run)</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">5–20m</span><span class="text-slate-700">Turn uni group projects &amp; part-time jobs into crisp 90-second AU STAR stories</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">20–30m</span><span class="text-slate-700">Timed re-run + delivery tips (pacing, eye line, Australian workplace tone)</span></div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-emerald-700">Takeaway: 3 Polished STAR Scripts</span>
+              <button data-book-blueprint="fm-jacob-george" data-bp-topic="One-Way Video &amp; STAR Story Coaching (30m Free Pilot)" class="btn-black text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0 cursor-pointer">Book Format</button>
+            </div>
+          </div>
+
+          <!-- Blueprint 3 -->
+          <div class="card rounded-3xl p-5 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-green">30 Min · Free Pilot</span>
+                <span class="text-xs font-semibold text-slate-400">Rishi / Paresh / Brijesh</span>
+              </div>
+              <div>
+                <h4 class="text-base font-extrabold text-[#111315]">Cloud, Security &amp; Data Technical Mock</h4>
+                <p class="text-xs text-slate-500 mt-1">Best if you're interviewing for Software, Cloud/AWS, Cybersecurity or Data pathways at banks, telcos &amp; SaaS.</p>
+              </div>
+              <div class="space-y-2 pt-1 text-xs">
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">0–8m</span><span class="text-slate-700">Walk through your capstone architecture or coding project like a hiring panel</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">8–22m</span><span class="text-slate-700">Realistic follow-ups on trade-offs, security, data modelling &amp; CI/CD</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">22–30m</span><span class="text-slate-700">Hiring-manager scorecard + exact gaps to close in 7 days</span></div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-emerald-700">Takeaway: Technical Scorecard + Study Plan</span>
+              <button data-book-blueprint="fm-rishi-aggarwal" data-bp-topic="Cloud, Security &amp; Data Technical Mock (30m Free Pilot)" class="btn-black text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0 cursor-pointer">Book Format</button>
+            </div>
+          </div>
+
+          <!-- Blueprint 4 -->
+          <div class="card rounded-3xl p-5 flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-gray">30 Min · Free Pilot</span>
+                <span class="text-xs font-semibold text-slate-400">Shifali / Abhishek / Jacob</span>
+              </div>
+              <div>
+                <h4 class="text-base font-extrabold text-[#111315]">Business Analysis &amp; Group Case Prep</h4>
+                <p class="text-xs text-slate-500 mt-1">Best if you're targeting BA, Product, Consulting or Tech Delivery grad roles with Assessment Centre group cases.</p>
+              </div>
+              <div class="space-y-2 pt-1 text-xs">
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">0–5m</span><span class="text-slate-700">How AU assessors score collaboration (standing out without dominating)</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">5–20m</span><span class="text-slate-700">Mini requirements &amp; stakeholder case drill (prioritisation, risks, JIRA framing)</span></div>
+                <div class="flex items-start gap-2.5"><span class="font-bold text-slate-400 w-12 shrink-0 tabular-nums">20–30m</span><span class="text-slate-700">Personalised Assessment Centre playbook &amp; phrases that win points</span></div>
+              </div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="text-xs font-semibold text-emerald-700">Takeaway: AC Case Framework + BA Playbook</span>
+              <button data-book-blueprint="fm-shifali-singla" data-bp-topic="Business Analysis &amp; Group Case Prep (30m Free Pilot)" class="btn-black text-xs font-semibold px-3.5 py-1.5 rounded-full shrink-0 cursor-pointer">Book Format</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Interactive Sample Written Scorecard (Intervue-style) -->
+        <div id="mtab-scorecard" class="hidden card rounded-3xl p-5 sm:p-7 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-blue">Illustrative Sample Report</span>
+                <span class="text-xs text-slate-400">Sent to every grad within 24h of a session</span>
+              </div>
+              <h4 id="sc-title" class="text-lg font-extrabold text-[#111315] mt-1.5">Software &amp; Cloud Grad — 1:1 Session Scorecard</h4>
+            </div>
+            <div class="inline-flex p-1 rounded-full bg-slate-100 self-start">
+              <button data-sctrack="tech" class="px-3 py-1.5 rounded-full text-xs font-bold bg-[#111315] text-white cursor-pointer">Tech / Cloud Sample</button>
+              <button data-sctrack="ba" class="px-3 py-1.5 rounded-full text-xs font-bold text-slate-600 cursor-pointer">BA / Agile Sample</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-5 space-y-4">
+              <div class="bg-slate-50 rounded-2xl p-4 flex items-center justify-between">
+                <div>
+                  <div class="text-xs font-semibold text-slate-500">Overall Readiness Score</div>
+                  <div id="sc-verdict" class="text-xs font-bold text-emerald-700 mt-0.5">Ready for Stage 2 Video &amp; Tech Panel</div>
+                </div>
+                <div class="text-right">
+                  <span id="sc-score" class="text-3xl font-extrabold text-[#111315] tabular-nums">7.8</span>
+                  <span class="text-xs font-bold text-slate-400">/10</span>
+                </div>
+              </div>
+              <div id="sc-bars" class="space-y-3"></div>
+            </div>
+
+            <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-rose-50/70 border border-rose-100 rounded-2xl p-4 space-y-2.5">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-rose-700">Top 2 Red Flags Fixed</div>
+                <ul id="sc-fixes" class="space-y-2 text-xs text-slate-700 leading-relaxed"></ul>
+              </div>
+              <div class="bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4 space-y-2.5">
+                <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-800">Next 7-Day Action Plan</div>
+                <ul id="sc-plan" class="space-y-2 text-xs text-slate-700 leading-relaxed"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: Before vs. After Real AU Grad Makeover -->
+        <div id="mtab-makeover" class="hidden space-y-4">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <!-- Resume Bullet Makeover -->
+            <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-blue">Example 1 · AU Resume Bullet</span>
+                <span class="text-xs text-slate-400">UniMelb / Monash Computing Grad</span>
+              </div>
+              <div class="rounded-2xl bg-rose-50/70 border border-rose-100 p-4 space-y-1.5">
+                <div class="text-xs font-extrabold text-rose-700">✕ Before Mentoring (Gets Filtered Out)</div>
+                <p class="text-xs sm:text-sm text-slate-700 italic">"Worked in a team of 4 students for my university capstone subject to build a web application using React and Python. Helped with frontend pages and fixed bugs before submission."</p>
+              </div>
+              <div class="rounded-2xl bg-emerald-50/80 border border-emerald-200 p-4 space-y-1.5">
+                <div class="text-xs font-extrabold text-emerald-800">✓ After 15-Min Redline (Hiring-Manager Ready)</div>
+                <p class="text-xs sm:text-sm text-slate-800 font-medium">"Built a React &amp; FastAPI student timetable web app (team of 4); owned REST API integration &amp; automated 18 Jest/Pytest checks via GitHub Actions, cutting page load time by 42% and demoing live to 3 industry reviewers."</p>
+              </div>
+              <div class="text-xs text-slate-500"><strong>Why it works in AU:</strong> Shows individual ownership, production habits (CI/tests), a concrete metric, and stakeholder demo skills.</div>
+            </div>
+
+            <!-- HireVue STAR Makeover -->
+            <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-orange">Example 2 · HireVue STAR Answer</span>
+                <span class="text-xs text-slate-400">"Tell me about a team conflict"</span>
+              </div>
+              <div class="rounded-2xl bg-rose-50/70 border border-rose-100 p-4 space-y-1.5">
+                <div class="text-xs font-extrabold text-rose-700">✕ Before Mentoring (Too Long &amp; Blames Teammate)</div>
+                <p class="text-xs sm:text-sm text-slate-700 italic">"Last semester one teammate wasn't doing their part of the assignment and ignored our group chat, so two days before the deadline I just stayed up all night and redid their code myself so we wouldn't fail."</p>
+              </div>
+              <div class="rounded-2xl bg-emerald-50/80 border border-emerald-200 p-4 space-y-1.5">
+                <div class="text-xs font-extrabold text-emerald-800">✓ After STAR Coaching (Calm, Collaborative AU Tone)</div>
+                <p class="text-xs sm:text-sm text-slate-800 font-medium">"Midway through our 4-person capstone, our backend tasks slipped 5 days. Instead of escalating immediately, I ran a 15-min check-in, learned a teammate was stuck on auth setup, split the ticket into smaller JIRA subtasks, and paired for an hour. We delivered 2 days early and scored 86%."</p>
+              </div>
+              <div class="text-xs text-slate-500"><strong>Why it works in AU:</strong> Banks &amp; tech firms screen out lone-wolf heroes—this proves empathy, Agile unblock habits &amp; measurable outcome in &lt;75s.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: Grad FAQ Accordion -->
+        <div id="mtab-faq" class="hidden grid grid-cols-1 md:grid-cols-2 gap-3">
+          <details open class="card rounded-2xl p-4 group">
+            <summary class="text-xs sm:text-sm font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+              <span>Is the 1:1 session really free right now?</span>
+              <span class="text-slate-400 font-bold group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-xs text-slate-600 leading-relaxed mt-2.5">Yes—during our <strong>Free Founding Pilot</strong>, our 6 Melbourne founders offer limited $0 30-minute sessions each week while we gather honest student feedback and refine GradPath AU.</p>
+          </details>
+          <details class="card rounded-2xl p-4 group">
+            <summary class="text-xs sm:text-sm font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+              <span>I'm on a Student (500) or 485 Post-Study Work Visa—can I book?</span>
+              <span class="text-slate-400 font-bold group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-xs text-slate-600 leading-relaxed mt-2.5">Absolutely. We explicitly filter which Australian employers accept 485 / unrestricted work rights (like Atlassian, Canva, Telstra tech pathways, Coles, Xero) versus Citizen/PR-only programs so you don't waste hours on auto-rejections.</p>
+          </details>
+          <details class="card rounded-2xl p-4 group">
+            <summary class="text-xs sm:text-sm font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+              <span>What do I need to prepare before my 30-minute call?</span>
+              <span class="text-slate-400 font-bold group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-xs text-slate-600 leading-relaxed mt-2.5">Just bring a 1-page CV (PDF or Google Doc), 2–3 graduate programs you're aiming for, and optionally your LinkedIn/GitHub link or 1 practice recording from our Video Lab.</p>
+          </details>
+          <details class="card rounded-2xl p-4 group">
+            <summary class="text-xs sm:text-sm font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+              <span>I've never done a corporate interview—will it feel intimidating?</span>
+              <span class="text-slate-400 font-bold group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-xs text-slate-600 leading-relaxed mt-2.5">Not at all. GradPath AU was literally started by Melbourne tech parents &amp; delivery leaders helping their own uni-grad kids. Every session is warm, practical, and zero-judgement.</p>
+          </details>
+          <details class="card rounded-2xl p-4 group md:col-span-2">
+            <summary class="text-xs sm:text-sm font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+              <span>Do mentors guarantee a job or internal referral?</span>
+              <span class="text-slate-400 font-bold group-open:rotate-45 transition-transform">+</span>
+            </summary>
+            <p class="text-xs text-slate-600 leading-relaxed mt-2.5">No—we stay 100% honest and independent. Mentors coach in a personal capacity to give you insider hiring-manager preparation, sharper storytelling, and clear strategy so you earn offers on your own merit.</p>
+          </details>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1113,7 +1380,7 @@
           </div>
 
           <div class="flex items-center justify-between gap-2 pt-4 border-t border-slate-100">
-            <span class="text-xs font-semibold text-slate-500">${m.isFounder ? "Founder & Mentor" : m.tier}</span>
+            <span class="text-xs font-semibold ${m.isFounder ? "text-emerald-700" : "text-slate-500"}">${m.isFounder ? "Free Pilot · 30m" : m.tier}</span>
             <button data-book-mentor="${m.id}" class="btn-black text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Request 1:1</button>
           </div>
         </article>
@@ -1130,19 +1397,23 @@
       });
     });
 
-    function openBookingModal(mentorId) {
+    function openBookingModal(mentorId, preselectedTopic) {
       const m = getAllMentors().find(x => x.id === mentorId);
       if (!m) return;
-      openModal(`Request 1:1 — ${m.name}`, `
+      const topicOptions = preselectedTopic && !m.topics.includes(preselectedTopic)
+        ? [preselectedTopic, ...m.topics]
+        : m.topics;
+      openModal(`Request Free 30m Pilot — ${m.name}`, `
         <form id="form-book-mentor" class="space-y-4">
           <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
             ${m.photo
               ? `<img src="${m.photo}" alt="${m.name}" class="w-11 h-11 rounded-full object-cover ring-2 ring-white shrink-0 bg-slate-200" />`
               : `<div class="w-11 h-11 rounded-2xl text-white font-extrabold text-xs flex items-center justify-center shrink-0" style="background-color: ${m.avatarBg};">${m.initials}</div>`}
-            <div class="text-xs">
+            <div class="text-xs min-w-0 flex-1">
               <div class="font-bold text-sm text-[#111315]">${m.role}</div>
               <div class="text-slate-500">${m.experience}</div>
             </div>
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-green shrink-0">$0 Pilot</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div><label class="text-xs font-bold block mb-1">Your Name</label><input required name="studentName" placeholder="e.g. Aarav" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
@@ -1151,10 +1422,10 @@
           <div><label class="text-xs font-bold block mb-1">University, Degree &amp; Visa Status</label><input required name="degree" placeholder="e.g. UniMelb BDes (Computing) · Citizen / PR / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
           <div class="space-y-2">
             <label class="text-xs font-bold block">Focus Topic</label>
-            ${m.topics.map((t, i) => `<label class="bg-slate-50 rounded-xl p-3 flex items-center gap-2.5 text-xs sm:text-sm cursor-pointer"><input type="radio" name="topic" value="${t}" ${i === 0 ? "checked" : ""} class="accent-blue-600" /><span>${t}</span></label>`).join("")}
+            ${topicOptions.map((t, i) => `<label class="bg-slate-50 rounded-xl p-3 flex items-center gap-2.5 text-xs sm:text-sm cursor-pointer"><input type="radio" name="topic" value="${t}" ${(preselectedTopic ? t === preselectedTopic : i === 0) ? "checked" : ""} class="accent-blue-600" /><span>${t}</span></label>`).join("")}
           </div>
           <div><label class="text-xs font-bold block mb-1">Goal / LinkedIn or GitHub Link</label><textarea name="note" rows="2" placeholder="Target roles or links..." class="field w-full rounded-xl p-3 text-xs sm:text-sm"></textarea></div>
-          <div class="flex justify-end pt-2 border-t border-slate-100"><button type="submit" class="btn-black text-xs font-semibold px-5 py-2.5 rounded-full cursor-pointer">Send Match Request</button></div>
+          <div class="flex justify-end pt-2 border-t border-slate-100"><button type="submit" class="btn-black text-xs font-semibold px-5 py-2.5 rounded-full cursor-pointer">Send Free Pilot Request</button></div>
         </form>
       `);
 
@@ -1168,12 +1439,110 @@
         const degree = fd.get("degree").toString().trim();
         const topic = fd.get("topic").toString();
         const note = fd.get("note").toString().trim();
-        const sent = await submitToFormspree({ _subject: `[GradPath AU] 1:1 Match Request — ${m.name}`, _replyto: studentEmail, form_type: "1:1 Mentor Match", requested_mentor: m.name, student_name: studentName, email: studentEmail, university_degree: degree, topic, notes: note });
+        const sent = await submitToFormspree({ _subject: `[GradPath AU] 1:1 Free Pilot Request — ${m.name}`, _replyto: studentEmail, form_type: "1:1 Mentor Match (Free Pilot)", requested_mentor: m.name, student_name: studentName, email: studentEmail, university_degree: degree, topic, notes: note });
         state.bookings.unshift({ id: "bk-" + Date.now(), mentorName: m.name, service: topic, slot: degree });
         saveState(); closeModal();
         showToast(sent ? `Request sent for ${m.name} — we’ll email you shortly!` : `Saved request locally!`);
       });
     }
+
+    // Inside a Mentoring Session — Segmented Tabs, Blueprints & Sample Scorecard
+    const SAMPLE_SCORECARDS = {
+      tech: {
+        title: "Software & Cloud Grad — 1:1 Session Scorecard",
+        verdict: "Ready for Stage 2 Video & Tech Panel",
+        score: "7.8",
+        bars: [
+          { label: "AU Resume & ATS Fit", val: 8.5, color: "bg-emerald-600" },
+          { label: "STAR Structure & Clarity", val: 7.5, color: "bg-blue-600" },
+          { label: "Technical / Capstone Depth", val: 8.0, color: "bg-blue-600" },
+          { label: "Stakeholder & Team Framing", val: 7.2, color: "bg-amber-500" }
+        ],
+        fixes: [
+          "Cut generic uni course descriptions; led CV bullets with measurable API speed & CI/CD test impact.",
+          "Shortened HireVue conflict story from 2m45s to a crisp 75s collaborative STAR structure."
+        ],
+        plan: [
+          "Day 1–2: Add architecture diagram & live demo GIF to top pinned GitHub repo.",
+          "Day 3–4: Record 3 behavioural answers in the Video Lab targeting NAB, Atlassian & Telstra.",
+          "Day 5–7: Submit 6 tailored applications ahead of Feb 2027 intake openings."
+        ]
+      },
+      ba: {
+        title: "Business Analyst & Agile Grad — 1:1 Session Scorecard",
+        verdict: "Strong Foundation · Ready for Group AC",
+        score: "8.1",
+        bars: [
+          { label: "Requirements & User Stories", val: 8.4, color: "bg-emerald-600" },
+          { label: "Stakeholder Workshop Framing", val: 8.0, color: "bg-blue-600" },
+          { label: "Commercial & Risk Thinking", val: 7.6, color: "bg-blue-600" },
+          { label: "Group Case Facilitation", val: 8.4, color: "bg-emerald-600" }
+        ],
+        fixes: [
+          "Replaced vague 'helped gather requirements' bullets with concrete JIRA user stories & UAT sign-off examples.",
+          "Practised inviting quieter teammates during group case drills (top scoring criterion at AU banks & Big 4)."
+        ],
+        plan: [
+          "Day 1–2: Build a 1-page sample PRD / JIRA backlog case study from your uni capstone.",
+          "Day 3–5: Drill the MediLink 15-min Group Case brief & rubric in the Assessments tab.",
+          "Day 6–7: Apply to IAG, NAB, Deloitte, PwC & Telstra BA/Delivery pathways."
+        ]
+      }
+    };
+
+    function renderSampleScorecard(track) {
+      const sc = SAMPLE_SCORECARDS[track] || SAMPLE_SCORECARDS.tech;
+      document.getElementById("sc-title").textContent = sc.title;
+      document.getElementById("sc-verdict").textContent = sc.verdict;
+      document.getElementById("sc-score").textContent = sc.score;
+      document.getElementById("sc-bars").innerHTML = sc.bars.map(b => `
+        <div class="space-y-1">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-semibold text-slate-700">${b.label}</span>
+            <span class="font-bold text-[#111315] tabular-nums">${b.val}/10</span>
+          </div>
+          <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+            <div class="h-full rounded-full ${b.color}" style="width: ${b.val * 10}%;"></div>
+          </div>
+        </div>
+      `).join("");
+      document.getElementById("sc-fixes").innerHTML = sc.fixes.map(f => `<li class="flex items-start gap-2"><span class="text-rose-600 font-bold">•</span><span>${f}</span></li>`).join("");
+      document.getElementById("sc-plan").innerHTML = sc.plan.map(p => `<li class="flex items-start gap-2"><span class="text-emerald-700 font-bold">✓</span><span>${p}</span></li>`).join("");
+    }
+
+    document.querySelectorAll("[data-mtab]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const target = btn.dataset.mtab;
+        ["blueprints", "scorecard", "makeover", "faq"].forEach(k => {
+          document.getElementById(`mtab-${k}`).classList.toggle("hidden", k !== target);
+        });
+        document.querySelectorAll("[data-mtab]").forEach(b => {
+          const active = b.dataset.mtab === target;
+          b.className = active
+            ? "px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer"
+            : "px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer";
+        });
+      });
+    });
+
+    document.querySelectorAll("[data-sctrack]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const track = btn.dataset.sctrack;
+        renderSampleScorecard(track);
+        document.querySelectorAll("[data-sctrack]").forEach(b => {
+          const active = b.dataset.sctrack === track;
+          b.className = active
+            ? "px-3 py-1.5 rounded-full text-xs font-bold bg-[#111315] text-white cursor-pointer"
+            : "px-3 py-1.5 rounded-full text-xs font-bold text-slate-600 cursor-pointer";
+        });
+      });
+    });
+
+    document.querySelectorAll("[data-book-blueprint]").forEach(btn => {
+      btn.addEventListener("click", () => openBookingModal(btn.dataset.bookBlueprint, btn.dataset.bpTopic));
+    });
+
+    renderSampleScorecard("tech");
 
     document.getElementById("btn-add-mentor").addEventListener("click", () => {
       openModal("Join as a Founding Mentor", `
