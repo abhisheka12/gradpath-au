@@ -1455,10 +1455,11 @@
     function openBookingModal(mentorId, preselectedTopic) {
       const m = getAllMentors().find(x => x.id === mentorId);
       if (!m) return;
+      const esc = s => String(s || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
       const topicOptions = preselectedTopic && !m.topics.includes(preselectedTopic)
         ? [preselectedTopic, ...m.topics]
         : m.topics;
-      openModal(`Request Free 30m Pilot — ${m.name}`, `
+      openModal(`Free 30m Pilot · ${m.name}`, `
         <form id="form-book-mentor" class="space-y-4">
           <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
             ${m.photo
@@ -1474,7 +1475,19 @@
             <div><label class="text-xs font-bold block mb-1">Your Name</label><input required name="studentName" placeholder="e.g. Aarav" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
             <div><label class="text-xs font-bold block mb-1">Your Email</label><input required type="email" name="studentEmail" placeholder="you@email.com" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
           </div>
-          <div><label class="text-xs font-bold block mb-1">University, Degree &amp; Visa Status</label><input required name="degree" placeholder="e.g. UniMelb BDes (Computing) · Citizen / PR / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div><label class="text-xs font-bold block mb-1">University, Degree &amp; Visa</label><input required name="degree" placeholder="e.g. UniMelb BDes · Citizen / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
+            <div>
+              <label class="text-xs font-bold block mb-1">Preferred Time (Melbourne / AEDT)</label>
+              <select required name="availability" class="field w-full rounded-xl px-3 py-2 text-xs sm:text-sm cursor-pointer">
+                <option value="Weekday Evenings (6–8pm AEDT)">Weekday Evenings (6–8pm AEDT)</option>
+                <option value="Weekday Lunchtime (12–2pm AEDT)">Weekday Lunchtime (12–2pm AEDT)</option>
+                <option value="Weekend Morning (9am–12pm AEDT)">Weekend Morning (9am–12pm AEDT)</option>
+                <option value="Weekend Afternoon (2–5pm AEDT)">Weekend Afternoon (2–5pm AEDT)</option>
+                <option value="Flexible — Any Time">Flexible — Any Time</option>
+              </select>
+            </div>
+          </div>
           <div class="space-y-2">
             <label class="text-xs font-bold block">Focus Topic</label>
             ${topicOptions.map((t, i) => `<label class="bg-slate-50 rounded-xl p-3 flex items-center gap-2.5 text-xs sm:text-sm cursor-pointer"><input type="radio" name="topic" value="${t}" ${(preselectedTopic ? t === preselectedTopic : i === 0) ? "checked" : ""} class="accent-blue-600" /><span>${t}</span></label>`).join("")}
@@ -1492,12 +1505,61 @@
         const studentName = fd.get("studentName").toString().trim();
         const studentEmail = fd.get("studentEmail").toString().trim();
         const degree = fd.get("degree").toString().trim();
+        const availability = fd.get("availability").toString();
         const topic = fd.get("topic").toString();
         const note = fd.get("note").toString().trim();
-        const sent = await submitToFormspree({ _subject: `[GradPath AU] 1:1 Free Pilot Request — ${m.name}`, _replyto: studentEmail, form_type: "1:1 Mentor Match (Free Pilot)", requested_mentor: m.name, student_name: studentName, email: studentEmail, university_degree: degree, topic, notes: note });
-        state.bookings.unshift({ id: "bk-" + Date.now(), mentorName: m.name, service: topic, slot: degree });
-        saveState(); closeModal();
-        showToast(sent ? `Request sent for ${m.name} — we’ll email you shortly!` : `Saved request locally!`);
+        const sent = await submitToFormspree({
+          _subject: `[GradPath AU] 1:1 Free Pilot Request — ${m.name}`,
+          _replyto: studentEmail,
+          form_type: "1:1 Mentor Match (Free Pilot)",
+          requested_mentor: m.name,
+          student_name: studentName,
+          email: studentEmail,
+          university_degree: degree,
+          preferred_availability: availability,
+          topic,
+          notes: note
+        });
+        state.bookings.unshift({ id: "bk-" + Date.now(), mentorName: m.name, service: topic, slot: `${availability} · ${degree}` });
+        saveState();
+
+        // Crisp Green Confirmation Screen inside the modal
+        openModal("Request Received ✓", `
+          <div class="space-y-5">
+            <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 sm:p-5 space-y-2">
+              <div class="flex items-center gap-2.5">
+                <span class="w-8 h-8 rounded-full bg-emerald-600 text-white text-sm font-extrabold flex items-center justify-center shrink-0">✓</span>
+                <div>
+                  <div class="text-sm sm:text-base font-extrabold text-emerald-950">You’re on ${esc(m.name)}’s pilot list!</div>
+                  <div class="text-xs text-emerald-800">${sent ? `Confirmation logged for ${esc(studentEmail)}` : `Saved locally for ${esc(studentEmail)}`}</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-slate-50 rounded-2xl p-4 space-y-2 text-xs">
+              <div class="flex justify-between gap-3"><span class="text-slate-500">Mentor</span><span class="font-bold text-[#111315] text-right">${esc(m.name)}</span></div>
+              <div class="flex justify-between gap-3"><span class="text-slate-500">Session</span><span class="font-bold text-[#111315] text-right">${esc(topic)}</span></div>
+              <div class="flex justify-between gap-3"><span class="text-slate-500">Preferred Time</span><span class="font-bold text-[#111315] text-right">${esc(availability)}</span></div>
+              <div class="flex justify-between gap-3"><span class="text-slate-500">Cost</span><span class="font-bold text-emerald-700 text-right">Free Founding Pilot ($0)</span></div>
+            </div>
+
+            <div class="space-y-2.5">
+              <div class="text-xs font-extrabold uppercase tracking-wider text-slate-400">What Happens Next</div>
+              <div class="space-y-2 text-xs text-slate-700">
+                <div class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-[#111315] text-white text-[11px] font-bold flex items-center justify-center shrink-0">1</span><span>We review your request within <strong>24–48 hours</strong> and confirm a 30-min slot matching your availability.</span></div>
+                <div class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">2</span><span>You’ll receive a <strong>Zoom / Google Meet invite</strong> at <strong>${esc(studentEmail)}</strong>.</span></div>
+                <div class="flex items-start gap-2.5"><span class="w-5 h-5 rounded-full bg-emerald-600 text-white text-[11px] font-bold flex items-center justify-center shrink-0">3</span><span>Bring your <strong>1-page CV</strong> (and optionally 1 recorded practice clip from our Video Lab).</span></div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-end gap-2 pt-3 border-t border-slate-100">
+              <button id="btn-confirm-lab" class="btn-ghost text-xs font-semibold px-4 py-2 rounded-full cursor-pointer">Try Video Lab While You Wait</button>
+              <button id="btn-confirm-done" class="btn-black text-xs font-semibold px-5 py-2 rounded-full cursor-pointer">Done</button>
+            </div>
+          </div>
+        `);
+        document.getElementById("btn-confirm-done").addEventListener("click", closeModal);
+        document.getElementById("btn-confirm-lab").addEventListener("click", () => { closeModal(); switchTab("lab"); });
       });
     }
 
