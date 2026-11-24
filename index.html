@@ -360,11 +360,11 @@
             </p>
           </div>
           <!-- Segmented Pill Switcher -->
-          <div id="mentor-example-tabs" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar p-1 rounded-full bg-slate-200/75 self-start md:self-auto">
-            <button data-mtab="blueprints" class="px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer">Session Blueprints</button>
-            <button data-mtab="scorecard" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Sample Scorecard</button>
-            <button data-mtab="makeover" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Before vs. After</button>
-            <button data-mtab="faq" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Grad FAQ</button>
+          <div id="mentor-example-tabs" class="flex items-center gap-1.5 overflow-x-auto no-scrollbar max-w-full p-1 rounded-full bg-slate-200/75 self-start md:self-auto">
+            <button data-extab="blueprints" class="px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer">Session Blueprints</button>
+            <button data-extab="scorecard" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Sample Scorecard</button>
+            <button data-extab="makeover" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Before vs. After</button>
+            <button data-extab="faq" class="px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer">Grad FAQ</button>
           </div>
         </div>
 
@@ -443,7 +443,7 @@
           <div class="card rounded-3xl p-5 flex flex-col justify-between gap-4">
             <div class="space-y-3">
               <div class="flex items-center justify-between gap-2">
-                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-gray">30 Min · Free Pilot</span>
+                <span class="text-xs font-bold px-2.5 py-1 rounded-full pill-slate">30 Min · Free Pilot</span>
                 <span class="text-xs font-semibold text-slate-400">Shifali / Abhishek / Jacob</span>
               </div>
               <div>
@@ -1510,14 +1510,14 @@
       document.getElementById("sc-plan").innerHTML = sc.plan.map(p => `<li class="flex items-start gap-2"><span class="text-emerald-700 font-bold">✓</span><span>${p}</span></li>`).join("");
     }
 
-    document.querySelectorAll("[data-mtab]").forEach(btn => {
+    document.querySelectorAll("[data-extab]").forEach(btn => {
       btn.addEventListener("click", () => {
-        const target = btn.dataset.mtab;
+        const target = btn.dataset.extab;
         ["blueprints", "scorecard", "makeover", "faq"].forEach(k => {
           document.getElementById(`mtab-${k}`).classList.toggle("hidden", k !== target);
         });
-        document.querySelectorAll("[data-mtab]").forEach(b => {
-          const active = b.dataset.mtab === target;
+        document.querySelectorAll("[data-extab]").forEach(b => {
+          const active = b.dataset.extab === target;
           b.className = active
             ? "px-3.5 py-2 rounded-full text-xs font-bold bg-[#111315] text-white whitespace-nowrap cursor-pointer"
             : "px-3.5 py-2 rounded-full text-xs font-bold text-slate-600 whitespace-nowrap cursor-pointer";
