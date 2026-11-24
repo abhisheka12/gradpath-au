@@ -969,9 +969,9 @@
         <!-- Right Card: Live Invite Preview & 1-Click Send Actions -->
         <div class="lg:col-span-5 space-y-4">
           <div class="card rounded-3xl p-5 sm:p-6 space-y-4">
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between gap-2">
               <h3 class="text-base font-extrabold text-[#111315]">Confirm &amp; Send Invite</h3>
-              <span class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-blue">1-Click Portal Sync</span>
+              <span id="st-autosend-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full pill-orange">Setup Auto-Send</span>
             </div>
 
             <div class="bg-slate-50 rounded-2xl p-4 space-y-2 text-xs">
@@ -979,16 +979,40 @@
               <div id="st-join-url-preview" class="font-mono text-[11px] text-blue-700 break-all bg-white border border-slate-200 rounded-xl p-2.5"></div>
             </div>
 
-            <div class="space-y-2.5">
-              <button id="btn-st-gcal" class="btn-black w-full text-xs sm:text-sm font-semibold px-4 py-3 rounded-full cursor-pointer">
-                1. Add to Google Calendar (Invites Student) ↗
-              </button>
-              <button id="btn-st-mailto" class="btn-ghost w-full text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-full cursor-pointer">
-                2. Email Confirmation &amp; Join Link to Student
-              </button>
+            <!-- Primary 1-Click Send Invite CTA -->
+            <button id="btn-st-send-invite" class="btn-black w-full text-sm font-bold px-5 py-3.5 rounded-full cursor-pointer">
+              Send Invite to Graduate →
+            </button>
+
+            <!-- Live Sent Confirmation Banner -->
+            <div id="st-sent-banner" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 text-xs text-emerald-900 space-y-1">
+              <div class="font-extrabold">✓ Calendar Invite &amp; Email Sent!</div>
+              <div id="st-sent-detail" class="text-emerald-800"></div>
+            </div>
+
+            <!-- Collapsible Google Apps Script Auto-Send Setup -->
+            <details id="st-gas-panel" class="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 text-xs">
+              <summary class="font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
+                <span>⚙️ Google Calendar + Gmail Auto-Send URL</span>
+                <span class="text-blue-600 font-semibold">Configure</span>
+              </summary>
+              <div class="mt-3 space-y-2.5">
+                <p class="text-slate-600 leading-relaxed">Paste your deployed Google Apps Script Web App URL (ends in <code class="bg-white px-1 rounded">/exec</code>) so <strong>Send Invite</strong> automatically creates the Google Calendar invite &amp; emails the graduate directly.</p>
+                <div class="flex gap-2">
+                  <input id="st-gas-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" class="field flex-1 rounded-xl px-3 py-2 text-xs" />
+                  <button id="btn-st-save-gas" class="btn-black text-xs font-semibold px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">Save</button>
+                </div>
+              </div>
+            </details>
+
+            <!-- Quick Manual Fallbacks -->
+            <div class="space-y-2 pt-1">
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Or Send Manually</div>
               <div class="grid grid-cols-2 gap-2">
-                <button id="btn-st-ics" class="btn-ghost text-xs font-semibold px-3 py-2.5 rounded-full cursor-pointer">Download .ics</button>
-                <button id="btn-st-copy" class="btn-ghost text-xs font-semibold px-3 py-2.5 rounded-full cursor-pointer">Copy Invite Text</button>
+                <button id="btn-st-gcal" class="btn-ghost text-xs font-semibold px-3 py-2 rounded-full cursor-pointer">Google Calendar ↗</button>
+                <button id="btn-st-mailto" class="btn-ghost text-xs font-semibold px-3 py-2 rounded-full cursor-pointer">Open Gmail Draft</button>
+                <button id="btn-st-ics" class="btn-ghost text-xs font-semibold px-3 py-2 rounded-full cursor-pointer">Download .ics</button>
+                <button id="btn-st-copy" class="btn-ghost text-xs font-semibold px-3 py-2 rounded-full cursor-pointer">Copy Invite Text</button>
               </div>
             </div>
 
@@ -2525,6 +2549,99 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       return { d, joinUrl, whenStr, subject, body };
     }
 
+    // Google Apps Script Automated Calendar + Gmail Sender (Free Web App)
+    const DEFAULT_APPS_SCRIPT_URL = "";
+    const GAS_STORAGE_KEY = "gradpath_au_gas_url_v1";
+
+    function getGasUrl() {
+      try { return (localStorage.getItem(GAS_STORAGE_KEY) || DEFAULT_APPS_SCRIPT_URL || "").trim(); }
+      catch { return DEFAULT_APPS_SCRIPT_URL; }
+    }
+
+    function updateGasBadge() {
+      const url = getGasUrl();
+      const badge = document.getElementById("st-autosend-badge");
+      const input = document.getElementById("st-gas-url");
+      if (input && !input.value && url) input.value = url;
+      if (!badge) return;
+      if (url) {
+        badge.textContent = "✓ Auto-Send Ready";
+        badge.className = "text-xs font-bold px-2.5 py-0.5 rounded-full pill-green";
+      } else {
+        badge.textContent = "Setup Auto-Send";
+        badge.className = "text-xs font-bold px-2.5 py-0.5 rounded-full pill-orange";
+      }
+    }
+    updateGasBadge();
+
+    document.getElementById("btn-st-save-gas").addEventListener("click", () => {
+      const val = document.getElementById("st-gas-url").value.trim();
+      if (val && !val.startsWith("https://script.google.com/")) {
+        showToast("URL should start with https://script.google.com/...");
+        return;
+      }
+      try { localStorage.setItem(GAS_STORAGE_KEY, val); } catch {}
+      updateGasBadge();
+      document.getElementById("st-gas-panel").open = false;
+      showToast(val ? "Google Auto-Send connected!" : "Cleared Auto-Send URL.");
+    });
+
+    async function postToAppsScript(payload) {
+      const gasUrl = getGasUrl();
+      if (!gasUrl) return { ok: false, reason: "not_configured" };
+      try {
+        const res = await fetch(gasUrl, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({ ok: res.ok }));
+        return data && data.ok ? data : { ok: false, error: (data && data.error) || `HTTP ${res.status}` };
+      } catch (err) {
+        return { ok: false, error: String(err) };
+      }
+    }
+
+    // PRIMARY CTA: 1-Click Send Invite to Graduate (Google Calendar + Branded Email)
+    document.getElementById("btn-st-send-invite").addEventListener("click", async () => {
+      const { d, joinUrl } = buildInviteDetails();
+      if (!d.email) {
+        showToast("Please enter the graduate’s email address first.");
+        document.getElementById("st-email").focus();
+        return;
+      }
+      const gasUrl = getGasUrl();
+      if (!gasUrl) {
+        document.getElementById("st-gas-panel").open = true;
+        document.getElementById("st-gas-url").focus();
+        showToast("Paste your Google Apps Script URL below to auto-send, or use Google Calendar / Gmail Draft.");
+        return;
+      }
+      const btn = document.getElementById("btn-st-send-invite");
+      btn.disabled = true;
+      btn.textContent = "Sending Calendar Invite & Email...";
+      const result = await postToAppsScript({
+        action: "send_invite",
+        mentor: d.mentor,
+        student: d.student,
+        email: d.email,
+        topic: d.topic,
+        date: d.date,
+        time: d.time,
+        duration: d.duration,
+        joinUrl
+      });
+      btn.disabled = false;
+      btn.textContent = "Send Invite to Graduate →";
+      if (result.ok) {
+        document.getElementById("st-sent-detail").textContent = `Google Calendar invite & GradPath AU join link emailed to ${d.email} for ${d.date} at ${d.time} AEDT.`;
+        document.getElementById("st-sent-banner").classList.remove("hidden");
+        showToast(`Invite sent directly to ${d.email}!`);
+      } else {
+        showToast(`Could not auto-send (${result.error || "check Apps Script permissions"}). Try Google Calendar fallback.`);
+      }
+    });
+
     // 1. Google Calendar Invite (Pre-adds student email!)
     document.getElementById("btn-st-gcal").addEventListener("click", () => {
       const { d, joinUrl, subject, body } = buildInviteDetails();
@@ -2896,8 +3013,31 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       catch { showToast("Could not copy link."); }
     });
 
-    document.getElementById("btn-rp-email").addEventListener("click", () => {
+    document.getElementById("btn-rp-email").addEventListener("click", async () => {
       if (!lastReportObj) lastReportObj = buildCurrentReportObj();
+      if (!lastGeneratedReportUrl) {
+        lastGeneratedReportUrl = `${getPortalBase()}?report=${encodeReportPayload(lastReportObj)}`;
+      }
+      if (getGasUrl() && lastReportObj.em) {
+        const btn = document.getElementById("btn-rp-email");
+        btn.disabled = true;
+        btn.textContent = "Sending Scorecard Email...";
+        const res = await postToAppsScript({
+          action: "send_report",
+          mentor: lastReportObj.m,
+          student: lastReportObj.st,
+          email: lastReportObj.em,
+          overall: lastReportObj.ov,
+          verdict: lastReportObj.vd,
+          reportUrl: lastGeneratedReportUrl
+        });
+        btn.disabled = false;
+        btn.textContent = "Email Report Link to Graduate";
+        if (res.ok) {
+          showToast(`Scorecard email sent directly to ${lastReportObj.em}!`);
+          return;
+        }
+      }
       const subject = `Your GradPath AU Session Scorecard (${lastReportObj.ov}/10) — ${lastReportObj.m}`;
       const body = [
         `Hi ${lastReportObj.st},`,
