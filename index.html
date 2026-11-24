@@ -218,6 +218,7 @@
                   <span class="w-7 h-7 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">RA</span>
                   <span class="w-7 h-7 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">BP</span>
                   <span class="w-7 h-7 rounded-full bg-orange-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">PB</span>
+                  <img src="assets/mentor-jacob-george.jpg" alt="Jacob George" class="w-7 h-7 rounded-full object-cover ring-2 ring-white bg-slate-200" />
                 </div>
                 <div class="text-xs leading-tight">
                   <div class="font-bold text-[#111315]">5 Melbourne Tech Founders</div>
@@ -685,6 +686,7 @@
         name: "Jacob George",
         initials: "JG",
         avatarBg: "#EA580C",
+        photo: "assets/mentor-jacob-george.jpg",
         role: "Agile Project Manager & IT Delivery Leader · Founder",
         experience: "Telstra, Optus, Toll, Bupa, Tennis AU · 15 yrs Amdocs",
         status: "Founder & Verified Mentor",
@@ -1066,7 +1068,9 @@
         <article class="card card-hover rounded-3xl p-5 flex flex-col justify-between gap-5">
           <div class="space-y-4">
             <div class="flex items-start gap-3.5">
-              <div class="w-12 h-12 rounded-2xl text-white font-extrabold text-sm flex items-center justify-center shrink-0" style="background-color: ${m.avatarBg};">${m.initials}</div>
+              ${m.photo
+                ? `<img src="${m.photo}" alt="${m.name}" class="w-12 h-12 rounded-full object-cover ring-2 ring-slate-100 shrink-0 bg-slate-100" />`
+                : `<div class="w-12 h-12 rounded-2xl text-white font-extrabold text-sm flex items-center justify-center shrink-0" style="background-color: ${m.avatarBg};">${m.initials}</div>`}
               <div class="min-w-0 flex-1">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center gap-1.5 flex-wrap">
@@ -1111,7 +1115,9 @@
       openModal(`Request 1:1 — ${m.name}`, `
         <form id="form-book-mentor" class="space-y-4">
           <div class="bg-slate-50 rounded-2xl p-4 flex items-center gap-3">
-            <div class="w-11 h-11 rounded-2xl text-white font-extrabold text-xs flex items-center justify-center shrink-0" style="background-color: ${m.avatarBg};">${m.initials}</div>
+            ${m.photo
+              ? `<img src="${m.photo}" alt="${m.name}" class="w-11 h-11 rounded-full object-cover ring-2 ring-white shrink-0 bg-slate-200" />`
+              : `<div class="w-11 h-11 rounded-2xl text-white font-extrabold text-xs flex items-center justify-center shrink-0" style="background-color: ${m.avatarBg};">${m.initials}</div>`}
             <div class="text-xs">
               <div class="font-bold text-sm text-[#111315]">${m.role}</div>
               <div class="text-slate-500">${m.experience}</div>
