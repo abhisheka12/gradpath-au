@@ -1423,19 +1423,20 @@
     const FOUNDING_MENTORS = [
       // TIER 1: SENIOR INDUSTRY PRACTITIONERS (Founding Network)
       {
-        id: "fm-cyber",
+        id: "fm-rishi-aggarwal",
         tier: "Senior Industry",
-        name: "Cybersecurity Practice Mentor",
-        initials: "CS",
+        name: "Rishi Aggarwal",
+        initials: "RA",
         avatarBg: "#0E5A4C",
-        role: "Senior Cybersecurity Specialist · Australia",
-        experience: "Founding Network · Industry Practitioner",
-        status: "Accepting 1:1 Match Requests",
-        tags: ["Senior Industry", "Cybersecurity"],
-        bio: "Experienced Australian cybersecurity practitioner helping grads break into SOC, cloud security, GRC, and tech grad cyber streams—plus practical security portfolio & panel prep.",
+        role: "Principal Security Architect – Global · LevelBlue",
+        experience: "17+ yrs InfoSec · Microsoft SC-100 · Melbourne",
+        status: "Verified Founding Mentor",
+        linkedin: "https://www.linkedin.com/in/errishiaggarwal",
+        tags: ["Senior Industry", "Cybersecurity", "Architecture"],
+        bio: "Principal Security Architect with 17+ years across banking, telco & enterprise. Leads SIEM/XDR/SOAR (Sentinel, Defender XDR, Splunk), cloud & identity security, AI-driven SecOps, and mentoring engineers.",
         topics: [
-          "Grad Cyber Pathway & Certification Roadmap (AU)",
-          "Resume + Technical Security Mock Interview"
+          "Breaking Into Australian Cybersecurity & SOC / Cloud Roles",
+          "Security Architecture, AI SecOps & Technical Panel Prep"
         ]
       },
       {
@@ -2061,6 +2062,7 @@
                 <div class="min-w-0 flex-1">
                   <div class="flex items-center justify-between gap-2">
                     <span class="text-xs font-semibold px-2 py-0.5 rounded-full ${isSenior ? "pill-eucalyptus" : "pill-ochre"}">${m.tier}</span>
+                    ${m.linkedin ? `<a href="${m.linkedin}" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-[#0E5A4C] hover:underline shrink-0">LinkedIn ↗</a>` : ""}
                   </div>
                   <h3 class="text-sm sm:text-base font-bold text-[#14191F] mt-1.5 leading-snug">${m.name}</h3>
                   <div class="text-xs font-medium text-[#0E5A4C] truncate">${m.role}</div>
