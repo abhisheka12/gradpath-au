@@ -1,4 +1,4 @@
-# GradPath AU v1 (Live Pilot Site) — Customer Journey Minimal Acceptance Test Kit (MAT)
+# GradHuddle v1 (Live Pilot Site) — Customer Journey Minimal Acceptance Test Kit (MAT)
 
 > **Regression Gate Rule:** Before every push to `abhisheka12/gradpath-au` (`main`), run:
 > ```bash

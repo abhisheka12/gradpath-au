@@ -1,5 +1,5 @@
 /**
- * GradPath AU v1 (Live Pilot Site) — Automated Minimal Acceptance Test Kit (MAT)
+ * GradHuddle v1 (Live Pilot Site) — Automated Minimal Acceptance Test Kit (MAT)
  *
  * Organized strictly by Customer Journey (J1 -> J4).
  * Run via: node tests/mat-v1.mjs
@@ -37,7 +37,7 @@ function runCase(id, journey, title, fn) {
   }
 }
 
-console.log("\nGradPath AU v1 — Minimal Acceptance Test Kit (MAT)\n");
+console.log("\nGradHuddle v1 — Minimal Acceptance Test Kit (MAT)\n");
 
 // =========================================================================
 // JOURNEY 1 — Graduate Discovery, 32 Programs & 7 Melbourne Tech Founders
