@@ -945,25 +945,28 @@
             </div>
 
             <div class="space-y-2">
-              <label class="text-xs font-bold block">Call Room Mode</label>
+              <label class="text-xs font-bold block">Video Call Provider (Google Meet)</label>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <label class="bg-blue-50/70 border border-blue-200 rounded-xl p-3 flex items-center gap-2.5 text-xs cursor-pointer">
-                  <input type="radio" name="st-room-mode" value="builtin" checked class="accent-blue-600" />
+                  <input type="radio" name="st-room-mode" value="google_meet_auto" checked class="accent-blue-600" />
                   <div>
-                    <div class="font-bold text-[#111315]">Built-in GradPath AU Video Room</div>
-                    <div class="text-slate-500">Free browser call · Zero downloads</div>
+                    <div class="font-bold text-[#111315]">Auto-Generate Google Meet</div>
+                    <div class="text-slate-500">Created automatically with Calendar invite</div>
                   </div>
                 </label>
                 <label class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center gap-2.5 text-xs cursor-pointer">
                   <input type="radio" name="st-room-mode" value="custom" class="accent-blue-600" />
                   <div>
-                    <div class="font-bold text-[#111315]">Custom Zoom / Google Meet Link</div>
-                    <div class="text-slate-500">Paste your own meeting URL</div>
+                    <div class="font-bold text-[#111315]">Paste Google Meet Link</div>
+                    <div class="text-slate-500">Use your own Meet / Zoom URL</div>
                   </div>
                 </label>
               </div>
               <div id="st-custom-url-wrap" class="hidden pt-1">
-                <input id="st-custom-url" type="url" placeholder="https://meet.google.com/xxx-xxxx-xxx or https://zoom.us/j/..." class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <input id="st-custom-url" type="url" placeholder="https://meet.google.com/xxx-yyyy-zzz" class="field flex-1 rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
+                  <a href="https://meet.new" target="_blank" rel="noopener noreferrer" class="btn-ghost text-xs font-semibold px-3.5 py-2 rounded-xl text-center shrink-0">Create via meet.new ↗</a>
+                </div>
               </div>
             </div>
           </div>
@@ -978,29 +981,29 @@
             </div>
 
             <div class="bg-slate-50 rounded-2xl p-4 space-y-2 text-xs">
-              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Student Join Link (Through GradPath AU)</div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Google Meet Join Link</div>
               <div id="st-join-url-preview" class="font-mono text-[11px] text-blue-700 break-all bg-white border border-slate-200 rounded-xl p-2.5"></div>
             </div>
 
             <!-- Primary 1-Click Send Invite CTA -->
             <button id="btn-st-send-invite" class="btn-black w-full text-sm font-bold px-5 py-3.5 rounded-full cursor-pointer">
-              Send Invite to Graduate →
+              Send Google Meet Invite →
             </button>
 
             <!-- Live Sent Confirmation Banner -->
             <div id="st-sent-banner" class="hidden bg-emerald-50 border border-emerald-200 rounded-2xl p-3.5 text-xs text-emerald-900 space-y-1">
-              <div class="font-extrabold">✓ Calendar Invite &amp; Email Sent!</div>
+              <div class="font-extrabold">✓ Google Calendar &amp; Meet Invite Sent!</div>
               <div id="st-sent-detail" class="text-emerald-800"></div>
             </div>
 
             <!-- Collapsible Google Apps Script Auto-Send Setup -->
             <details id="st-gas-panel" class="bg-slate-50 border border-slate-200/80 rounded-2xl p-3.5 text-xs">
               <summary class="font-bold text-[#111315] cursor-pointer list-none flex items-center justify-between gap-2">
-                <span>⚙️ Google Calendar + Gmail Auto-Send URL</span>
+                <span>⚙️ Google Calendar + Meet Auto-Send URL</span>
                 <span class="text-blue-600 font-semibold">Configure</span>
               </summary>
               <div class="mt-3 space-y-2.5">
-                <p class="text-slate-600 leading-relaxed">Paste your deployed Google Apps Script Web App URL (ends in <code class="bg-white px-1 rounded">/exec</code>) so <strong>Send Invite</strong> automatically creates the Google Calendar invite &amp; emails the graduate directly.</p>
+                <p class="text-slate-600 leading-relaxed">Paste your deployed Google Apps Script Web App URL (ends in <code class="bg-white px-1 rounded">/exec</code>) so <strong>Send Invite</strong> automatically creates the Google Calendar invite with a live Google Meet link &amp; emails the graduate directly.</p>
                 <div class="flex gap-2">
                   <input id="st-gas-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" class="field flex-1 rounded-xl px-3 py-2 text-xs" />
                   <button id="btn-st-save-gas" class="btn-black text-xs font-semibold px-3.5 py-2 rounded-xl shrink-0 cursor-pointer">Save</button>
@@ -1021,48 +1024,53 @@
 
             <div class="pt-3 border-t border-slate-100">
               <button id="btn-st-launch-live" class="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold px-4 py-3 rounded-full cursor-pointer transition-colors">
-                Launch Live Video Call &amp; Recorder →
+                Open Google Meet &amp; Session Recorder →
               </button>
             </div>
           </div>
 
           <div class="card rounded-2xl p-4 text-xs text-slate-600 leading-relaxed space-y-1">
             <div class="font-bold text-[#111315]">How the Graduate Joins</div>
-            <p>When the student clicks the <strong>GradPath AU Join Link</strong> in your invite, they open a clean, branded GradPath AU call room directly in their browser—no app install or account needed.</p>
+            <p>Both you and the graduate receive a native <strong>Google Calendar invite with Google Meet</strong>—zero extra software, crisp audio in Australia, and 1-tap mobile/desktop join.</p>
           </div>
         </div>
       </div>
 
-      <!-- STEP 2: LIVE VIDEO CALL + SESSION RECORDER + LIVE TRANSCRIPT -->
+      <!-- STEP 2: LIVE GOOGLE MEET CALL + SESSION RECORDER + LIVE TRANSCRIPT -->
       <div id="st-live" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left 7 Cols: Embedded GradPath AU Video Room -->
-        <div class="lg:col-span-7 card rounded-3xl p-4 sm:p-5 space-y-4">
+        <!-- Left 7 Cols: Google Meet Launch Console -->
+        <div class="lg:col-span-7 card rounded-3xl p-4 sm:p-6 space-y-4">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              <h3 id="st-live-title" class="text-sm sm:text-base font-extrabold text-[#111315]">GradPath AU Live Room</h3>
+              <h3 id="st-live-title" class="text-sm sm:text-base font-extrabold text-[#111315]">GradPath AU · Google Meet</h3>
             </div>
             <div class="flex items-center gap-2">
-              <button id="btn-st-copy-room" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full cursor-pointer">Copy Student Link</button>
-              <a id="link-st-open-room" href="#" target="_blank" rel="noopener noreferrer" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full">Open Full Tab ↗</a>
+              <button id="btn-st-copy-room" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full cursor-pointer">Copy Meet Link</button>
+              <a id="link-st-open-room" href="https://meet.new" target="_blank" rel="noopener noreferrer" class="btn-ghost text-xs font-semibold px-3 py-1.5 rounded-full">Launch Meet ↗</a>
             </div>
           </div>
 
-          <!-- Video Call Container (Loads on Click so Camera/Mic only start when ready) -->
-          <div id="st-room-stage" class="relative rounded-2xl overflow-hidden border border-slate-200 bg-[#111315] aspect-video flex flex-col items-center justify-center text-center p-6 text-white">
-            <div class="space-y-3 max-w-md">
-              <span class="inline-block text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-emerald-300">Private 1:1 Mentoring Room Ready</span>
+          <!-- Google Meet Launch Card -->
+          <div id="st-room-stage" class="relative rounded-2xl overflow-hidden border border-slate-200 bg-[#111315] p-6 sm:p-10 flex flex-col items-center justify-center text-center text-white">
+            <div class="space-y-3.5 max-w-md">
+              <span class="inline-block text-xs font-bold px-3 py-1 rounded-full bg-white/15 text-emerald-300">Google Meet 1:1 Mentoring Session</span>
               <div id="st-room-banner-names" class="text-lg sm:text-xl font-extrabold">30-Min Mentoring Session</div>
-              <p class="text-xs text-slate-300">Click below to join the embedded browser call right inside GradPath AU (camera &amp; mic permission will be requested).</p>
-              <div class="flex flex-wrap items-center justify-center gap-2 pt-1">
-                <button id="btn-st-join-embed" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-5 py-2.5 rounded-full cursor-pointer transition-colors">
-                  Start / Join Video Room
+              <p id="st-meet-stage-sub" class="text-xs text-slate-300">Launch your Google Meet call in a separate tab, and keep GradPath Mentor Studio open side-by-side to record the Meet tab &amp; draft the graduate’s scorecard.</p>
+              <div class="flex flex-wrap items-center justify-center gap-2.5 pt-1">
+                <button id="btn-st-join-embed" class="bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-bold px-6 py-3 rounded-full cursor-pointer transition-colors">
+                  Launch Google Meet Call ↗
                 </button>
-                <a id="link-st-join-ext" href="#" target="_blank" rel="noopener noreferrer" class="bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-2.5 rounded-full transition-colors">
-                  Open in Separate Tab ↗
+                <a id="link-st-join-ext" href="https://meet.new" target="_blank" rel="noopener noreferrer" class="bg-white/15 hover:bg-white/25 text-white text-xs font-semibold px-4 py-3 rounded-full transition-colors">
+                  Create Instant Meet (meet.new) ↗
                 </a>
               </div>
+              <div id="st-live-meet-url-display" class="text-[11px] font-mono text-slate-300 break-all"></div>
             </div>
+          </div>
+
+          <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-3.5 text-xs text-slate-700 leading-relaxed">
+            <strong class="text-[#111315]">Tip for Recording:</strong> Click <strong>Record Meet Tab + Mic</strong> on the right and pick your open <strong>Google Meet browser tab</strong> (with <em>Share tab audio</em> checked) to capture both voices locally.
           </div>
 
           <!-- Student Agenda Strip (Visible to both Mentor & Student Join Mode) -->
@@ -1080,13 +1088,13 @@
             <div class="flex items-center justify-between gap-2">
               <div>
                 <h4 class="text-sm font-extrabold text-[#111315]">Session Recorder</h4>
-                <p class="text-xs text-slate-500">Record call to review &amp; build the graduate’s report.</p>
+                <p class="text-xs text-slate-500">Record your Google Meet tab &amp; mic locally to build the scorecard.</p>
               </div>
               <span id="st-rec-badge" class="hidden text-xs font-extrabold px-2.5 py-1 rounded-full bg-rose-600 text-white tabular-nums">● REC 00:00</span>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              <button id="btn-st-rec-screen" class="btn-black text-xs font-semibold px-3.5 py-2.5 rounded-full cursor-pointer">● Record Screen + Audio</button>
+              <button id="btn-st-rec-screen" class="btn-black text-xs font-semibold px-3.5 py-2.5 rounded-full cursor-pointer">● Record Meet Tab + Mic</button>
               <button id="btn-st-rec-audio" class="btn-ghost text-xs font-semibold px-3.5 py-2.5 rounded-full cursor-pointer">🎙 Record Mic Only</button>
             </div>
             <button id="btn-st-rec-stop" class="hidden w-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold px-4 py-2.5 rounded-full cursor-pointer">■ Stop Recording</button>
@@ -2458,7 +2466,8 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       : "https://abhisheka12.github.io/gradpath-au/";
 
     let studioRoomId = "GradPathAU-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-    let studioRoomMode = "builtin";
+    let studioRoomMode = "google_meet_auto";
+    let studioGeneratedMeetUrl = "";
     let studioStudentJoinMode = false;
 
     // Default date = tomorrow
@@ -2488,21 +2497,16 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
 
     function getVideoCallUrl() {
       const d = getStudioData();
-      if (studioRoomMode === "custom" && d.customUrl) return d.customUrl;
-      return `https://meet.jit.si/${encodeURIComponent(studioRoomId)}#config.prejoinPageEnabled=true&config.startWithAudioMuted=false`;
+      if (d.customUrl) return d.customUrl;
+      if (studioGeneratedMeetUrl) return studioGeneratedMeetUrl;
+      return "https://meet.new";
     }
 
     function getStudentPortalJoinUrl() {
       const d = getStudioData();
-      if (studioRoomMode === "custom" && d.customUrl) return d.customUrl;
-      const qp = new URLSearchParams({
-        studio: "room",
-        room: studioRoomId,
-        mentor: d.mentor,
-        student: d.student,
-        topic: d.topic
-      });
-      return `${getPortalBase()}?${qp.toString()}`;
+      if (d.customUrl) return d.customUrl;
+      if (studioGeneratedMeetUrl) return studioGeneratedMeetUrl;
+      return "Auto-generated Google Meet link (created on Send Invite)";
     }
 
     function refreshStudioLinks() {
@@ -2513,7 +2517,13 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       document.getElementById("st-live-title").textContent = `${d.mentor} × ${d.student}`;
       document.getElementById("st-room-banner-names").textContent = `${d.topic}`;
       document.getElementById("link-st-open-room").href = rawRoom;
-      document.getElementById("link-st-join-ext").href = rawRoom;
+      document.getElementById("link-st-join-ext").href = "https://meet.new";
+      const displayEl = document.getElementById("st-live-meet-url-display");
+      if (displayEl) {
+        displayEl.textContent = rawRoom !== "https://meet.new"
+          ? rawRoom
+          : "No Meet link attached yet — click Send Invite to auto-generate or create via meet.new";
+      }
     }
 
     function switchStudioSubtab(sub) {
@@ -2545,7 +2555,8 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
 
     function buildInviteDetails() {
       const d = getStudioData();
-      const joinUrl = getStudentPortalJoinUrl();
+      const rawUrl = getVideoCallUrl();
+      const joinUrl = rawUrl !== "https://meet.new" ? rawUrl : "Included in Google Calendar invite (Google Meet)";
       const whenStr = `${d.date || "TBD"} at ${d.time} Melbourne (AEDT) (${d.duration} min)`;
       const subject = `Confirmed: GradPath AU 1:1 Mentoring — ${d.mentor} × ${d.student}`;
       const body = [
@@ -2555,7 +2566,7 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
         ``,
         `• Topic: ${d.topic}`,
         `• When: ${whenStr}`,
-        `• Join via GradPath AU Portal: ${joinUrl}`,
+        `• Google Meet: ${joinUrl}`,
         ``,
         `What to bring:`,
         `1. Your 1-page CV (PDF or Google Doc)`,
@@ -2621,7 +2632,7 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       }
     }
 
-    // PRIMARY CTA: 1-Click Send Invite to Graduate (Google Calendar + Branded Email)
+    // PRIMARY CTA: 1-Click Send Invite to Graduate (Google Calendar + Google Meet + Branded Email)
     document.getElementById("btn-st-send-invite").addEventListener("click", async () => {
       const { d, joinUrl } = buildInviteDetails();
       if (!d.email) {
@@ -2638,7 +2649,8 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       }
       const btn = document.getElementById("btn-st-send-invite");
       btn.disabled = true;
-      btn.textContent = "Sending Calendar Invite & Email...";
+      btn.textContent = "Creating Google Meet & Sending Invite...";
+      const providedMeet = d.customUrl || studioGeneratedMeetUrl || "";
       const result = await postToAppsScript({
         action: "send_invite",
         mentor: d.mentor,
@@ -2648,14 +2660,21 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
         date: d.date,
         time: d.time,
         duration: d.duration,
-        joinUrl
+        meetUrl: providedMeet,
+        createGoogleMeet: !providedMeet,
+        joinUrl: providedMeet || joinUrl
       });
       btn.disabled = false;
-      btn.textContent = "Send Invite to Graduate →";
+      btn.textContent = "Send Google Meet Invite →";
       if (result.ok) {
-        document.getElementById("st-sent-detail").textContent = `Google Calendar invite & GradPath AU join link emailed to ${d.email} for ${d.date} at ${d.time} AEDT.`;
+        if (result.meetUrl) {
+          studioGeneratedMeetUrl = result.meetUrl;
+          refreshStudioLinks();
+        }
+        const meetNote = result.meetUrl ? ` · Meet: ${result.meetUrl}` : "";
+        document.getElementById("st-sent-detail").textContent = `Google Calendar + Google Meet invite emailed to ${d.email} for ${d.date} at ${d.time} AEDT${meetNote}.`;
         document.getElementById("st-sent-banner").classList.remove("hidden");
-        showToast(`Invite sent directly to ${d.email}!`);
+        showToast(`Google Meet invite sent to ${d.email}!`);
       } else {
         showToast(`Could not auto-send (${result.error || "check Apps Script permissions"}). Try Google Calendar fallback.`);
       }
@@ -2675,11 +2694,11 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
       gcal.searchParams.set("text", subject);
       gcal.searchParams.set("dates", dates);
       gcal.searchParams.set("ctz", "Australia/Melbourne");
-      gcal.searchParams.set("location", joinUrl);
+      if (joinUrl.startsWith("http")) gcal.searchParams.set("location", joinUrl);
       gcal.searchParams.set("details", body);
       if (d.email) gcal.searchParams.set("add", d.email);
       window.open(gcal.toString(), "_blank", "noopener,noreferrer");
-      showToast("Opened Google Calendar invite!");
+      showToast("Opened Google Calendar — click 'Add Google Meet video conferencing'!");
     });
 
     // 2. Email Confirmation to Student
@@ -2731,21 +2750,20 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
 
     document.getElementById("btn-st-launch-live").addEventListener("click", () => switchStudioSubtab("live"));
     document.getElementById("btn-st-copy-room").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(getStudentPortalJoinUrl()); showToast("Copied GradPath AU student join link!"); }
+      const url = getVideoCallUrl();
+      if (url === "https://meet.new") {
+        showToast("Generate a Meet link via Send Invite or paste one in Schedule first.");
+        return;
+      }
+      try { await navigator.clipboard.writeText(url); showToast("Copied Google Meet link!"); }
       catch { showToast("Could not access clipboard."); }
     });
 
-    // Embedded Live Video Room Launcher (Jitsi Meet or Custom Link)
+    // Launch Google Meet in New Tab (Side-by-side with Mentor Studio Recorder)
     document.getElementById("btn-st-join-embed").addEventListener("click", () => {
       const url = getVideoCallUrl();
-      if (studioRoomMode === "custom") {
-        window.open(url, "_blank", "noopener,noreferrer");
-        showToast("Opened custom Zoom/Meet link in new tab!");
-        return;
-      }
-      const stage = document.getElementById("st-room-stage");
-      stage.className = "relative rounded-2xl overflow-hidden border border-slate-200 bg-black aspect-video";
-      stage.innerHTML = `<iframe src="${url}" allow="camera; microphone; fullscreen; display-capture; autoplay; clipboard-write" class="w-full h-full border-0"></iframe>`;
+      window.open(url, "_blank", "noopener,noreferrer");
+      showToast(url === "https://meet.new" ? "Opened new Google Meet room!" : "Launched Google Meet call!");
     });
 
     // Session Recorder (Screen + Audio OR Mic Only via native MediaRecorder)
@@ -3104,16 +3122,17 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
         if (qp.get("topic")) document.getElementById("st-topic").value = qp.get("topic");
         if (qp.get("notes")) document.getElementById("st-notes").value = qp.get("notes");
         if (qp.get("room")) studioRoomId = qp.get("room");
+        if (qp.get("meet")) studioGeneratedMeetUrl = qp.get("meet");
 
         if (studioParam === "room") {
           // Clean Student Join Room Mode (hides mentor scheduling & scorecard controls)
           studioStudentJoinMode = true;
           const stName = qp.get("student") || "Graduate";
           const mName = qp.get("mentor") || "Your GradPath AU Mentor";
-          document.getElementById("studio-badge").textContent = "Live 1:1 Mentoring Room";
+          document.getElementById("studio-badge").textContent = "Live 1:1 Mentoring · Google Meet";
           document.getElementById("studio-room-pill").textContent = "Free Founding Pilot · 30 Min";
           document.getElementById("studio-heading").textContent = `Welcome ${stName} — Session with ${mName}`;
-          document.getElementById("studio-subtitle").textContent = "Click 'Start / Join Video Room' below to connect directly in your browser. Bring your 1-page CV!";
+          document.getElementById("studio-subtitle").textContent = "Click 'Launch Google Meet Call' below to join your mentor. Bring your 1-page CV ready to screen share!";
           document.getElementById("studio-tabs-bar").classList.add("hidden");
           document.getElementById("st-mentor-tools").classList.add("hidden");
           switchTab("studio");
