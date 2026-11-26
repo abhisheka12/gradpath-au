@@ -211,8 +211,8 @@
               </div>
 
               <div class="relative rounded-2xl overflow-hidden border border-slate-200/80 bg-white">
-                <video id="hero-video" playsinline preload="metadata" poster="assets/mentoring-walkthrough-poster.jpg" class="w-full aspect-video block bg-white">
-                  <source src="assets/mentoring-walkthrough.mp4?v=2" type="video/mp4" />
+                <video id="hero-video" playsinline preload="metadata" poster="assets/mentoring-walkthrough-poster.jpg?v=3" class="w-full aspect-video block bg-white">
+                  <source src="assets/mentoring-walkthrough.mp4?v=3" type="video/mp4" />
                   Your browser does not support HTML5 video.
                 </video>
                 <button id="btn-hero-play" aria-label="Play 24-second GradHuddle concept walkthrough video" class="absolute inset-0 flex items-center justify-center bg-slate-900/10 hover:bg-slate-900/20 transition-colors cursor-pointer">
@@ -417,8 +417,8 @@
               </div>
             </div>
             <div class="relative rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-100">
-              <video id="blueprint-video" controls playsinline preload="metadata" poster="assets/mentoring-walkthrough-poster.jpg" class="w-full aspect-video block bg-white">
-                <source src="assets/mentoring-walkthrough.mp4?v=2" type="video/mp4" />
+              <video id="blueprint-video" controls playsinline preload="metadata" poster="assets/mentoring-walkthrough-poster.jpg?v=3" class="w-full aspect-video block bg-white">
+                <source src="assets/mentoring-walkthrough.mp4?v=3" type="video/mp4" />
                 Your browser does not support HTML5 video.
               </video>
               <button id="btn-blueprint-play" aria-label="Play walkthrough video" class="absolute inset-0 flex items-center justify-center bg-slate-900/15 hover:bg-slate-900/25 transition-colors cursor-pointer">
@@ -906,7 +906,7 @@
               <input id="st-email" type="email" placeholder="student@uni.edu.au" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
             </div>
             <div>
-              <label class="text-xs font-bold block mb-1">University, Degree &amp; Visa</label>
+              <label class="text-xs font-bold block mb-1">University &amp; Degree</label>
               <input id="st-degree" type="text" placeholder="e.g. UniMelb BDes (Computing) · Citizen" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" />
             </div>
             <div class="sm:col-span-2">
@@ -1075,7 +1075,7 @@
 
           <!-- Student Agenda Strip (Visible to both Mentor & Student Join Mode) -->
           <div class="bg-slate-50 rounded-2xl p-4 grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs">
-            <div><span class="font-extrabold text-blue-600">0–5m</span> <span class="text-slate-700">Target roles &amp; visa check</span></div>
+            <div><span class="font-extrabold text-blue-600">0–5m</span> <span class="text-slate-700">Target roles &amp; intake goals</span></div>
             <div><span class="font-extrabold text-blue-600">5–20m</span> <span class="text-slate-700">CV redline / STAR / Mock</span></div>
             <div><span class="font-extrabold text-blue-600">20–30m</span> <span class="text-slate-700">Re-run &amp; 7-day plan</span></div>
           </div>
@@ -1884,7 +1884,7 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
             <div><label class="text-xs font-bold block mb-1">Your Email</label><input required type="email" name="studentEmail" placeholder="you@email.com" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div><label class="text-xs font-bold block mb-1">University, Degree &amp; Visa</label><input required name="degree" placeholder="e.g. UniMelb BDes · Citizen / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
+            <div><label class="text-xs font-bold block mb-1">University &amp; Degree</label><input required name="degree" placeholder="e.g. UniMelb BDes · Citizen / 485" class="field w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm" /></div>
             <div>
               <label class="text-xs font-bold block mb-1">Preferred Time (Melbourne / AEDT)</label>
               <select required name="availability" class="field w-full rounded-xl px-3 py-2 text-xs sm:text-sm cursor-pointer">
@@ -2901,7 +2901,7 @@ Day 5–7: Submit 6 tailored graduate applications matching visa eligibility.</t
         plan.push("Day 3–5: Drill the MediLink 15-min Group Case rubric in GradHuddle Assessments.");
       }
       if (fixes.length) document.getElementById("rp-fixes").value = fixes.slice(0, 3).join("\n");
-      if (plan.length) document.getElementById("rp-plan").value = [...plan, "Day 5–7: Submit 6 tailored applications matching your visa eligibility ahead of 2028 AU intake openings."].slice(0, 3).join("\n");
+      if (plan.length) document.getElementById("rp-plan").value = [...plan, "Day 5–7: Submit 6 tailored applications aligned to your target roles ahead of 2028 AU intake openings."].slice(0, 3).join("\n");
       if (raw && !document.getElementById("rp-note").value.trim()) {
         document.getElementById("rp-note").value = "Key session notes captured: " + raw.slice(0, 220) + (raw.length > 220 ? "..." : "");
       }
